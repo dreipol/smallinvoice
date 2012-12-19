@@ -2,8 +2,9 @@ __author__ = 'phil'
 
 class PREVIEW_SIZE:
 	SMALL = 240
-	MEDIUM = 595
-	BIG = 1240
+	MEDIUM = 600
+	BIG = 825
+	HUGE = 1240
 
 class SmallInvoiceException(Exception):
 	""" Base class for all exceptions raised by smallinvoice """
@@ -23,4 +24,3 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
 	def __init__(self, status_code, remote_message):
 		message = "Failed to Connect, Status %s; Message: %s" % (status_code, remote_message)
 		super(SmallInvoiceException, self).__init__(message)
-
