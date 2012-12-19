@@ -10,20 +10,19 @@ class Client(object):
 	country_code = None
 	api_token = None
 
-	def __init__(self,country_code,api_token):
+	def __init__(self,api_token):
 		"""initializes the object, requires the country code and a valid api_token"""
 
-		# raises an exception if the parameters are not correctly formatted.
-		if not country_code or not api_token or len(country_code)<2:
+		# raises an exception if the parameters are not valid.
+		if not api_token :
 			raise SmallInvoiceConfigurationException(self)
-		self.country_code = country_code
 		self.api_token = api_token
 		self.invoices = InvoiceClient(self)
 
 
 	def get_api_endpoint(self):
-		""" returns the api end-point,respectively the url with the correct subdomain """
-		return "https://api-%s.smallinvoice.com/" % (self.country_code, )
+		""" returns the api end-point,respectively the url """
+		return "https://api.smallinvoice.com/"
 
 	def append_token_to_method(self, webservice_method):
 		"""appends the api-token to the webservice method, thus generating a valid url that can be requested. """
@@ -31,14 +30,19 @@ class Client(object):
 
 
 	def request_with_method(self, method, type = RESPONSE_TYPE.JSON	):
-		""" Excecutes the request with the specified method and returns a parsed json object
+		""" Excecutes the request with the specified method and returns either a raw or a parsed json object
 		"""
 		url = self.append_token_to_method(method)
-		result = requests.get(url)
+		result = requests.get(url,verify=False)
 		if result.status_code != requests.codes.ok:
 			raise SmallInvoiceConnectionException(result.status_code, result.text)
 		else:
 			if type == RESPONSE_TYPE.JSON:
-				return json.loads(result.text)
+				data = json.loads(result.text)
+				if 'error' in data and data["error"]==True:
+					error_code = data['errorcode']
+					error_message = data['errormessage']
+					raise SmallInvoiceConnectionException(error_code, error_message)
+				return data
 			else:
 				return result.content

@@ -17,9 +17,8 @@ class SmallInvoiceException(Exception):
 class SmallInvoiceConfigurationException(SmallInvoiceException):
 	""" Thrown when the client is not properl configurated"""
 	def __init__(self, client):
-		message = "Wrong configuration. the coutry_code must be set and at least be 2  digits long. "\
-				  "the api token must also be available: "\
-				  "country_code: %s, token: %s" % (client.country_code, client.api_token)
+		message = "Wrong configuration.: "\
+				  "token: %s" % (client.api_token,)
 		super(SmallInvoiceException, self).__init__(message)
 
 class SmallInvoiceConnectionException(SmallInvoiceException):

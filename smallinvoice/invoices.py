@@ -2,8 +2,8 @@ from smallinvoice import RESPONSE_TYPE
 
 __author__ = 'phil'
 
-invoice_list = "invoice"
-invoice_details = "invoice/id/%s"
+invoice_list = "invoice/list"
+invoice_details = "invoice/get/id/%s"
 invoice_pdf = "invoice/id/%s/type/pdf"
 invoice_preview = "invoice/id/%s/type/preview/page/%s/size/%s"
 
@@ -17,11 +17,11 @@ class InvoiceClient(object):
 
 	def all(self):
 		""" returns all invoices"""
-		return self.client.request_with_method(invoice_list)
+		return self.client.request_with_method(invoice_list)["items"]
 
 	def details(self, invoice_id):
 		""" returns the details to a specific invoice """
-		return self.client.request_with_method(invoice_details%(invoice_id,))
+		return self.client.request_with_method(invoice_details%(invoice_id,))["item"]
 
 	def pdf(self, invoice_id):
 		""" returns the pdf from the invoice as binary data """
