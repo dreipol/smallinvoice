@@ -29,7 +29,7 @@ class Client(object):
 		return self.get_api_endpoint() + webservice_method + "/token/%s"%(self.api_token,)
 
 
-	def request_with_method(self, method, type = RESPONSE_TYPE.JSON	):
+	def request_with_method(self, method):
 		""" Excecutes the request with the specified method and returns either a raw or a parsed json object
 		"""
 		url = self.append_token_to_method(method)
@@ -37,7 +37,8 @@ class Client(object):
 		if result.status_code != requests.codes.ok:
 			raise SmallInvoiceConnectionException(result.status_code, result.text)
 		else:
-			if type == RESPONSE_TYPE.JSON:
+			#currentl text/html is the default, not application/json
+			if 'text/html' in result.headers.get('content-type'):
 				data = json.loads(result.text)
 				if 'error' in data and data["error"]==True:
 					error_code = data['errorcode']

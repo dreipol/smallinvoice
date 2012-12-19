@@ -1,7 +1,4 @@
 __author__ = 'phil'
-class RESPONSE_TYPE:
-	JSON = 1
-	RAW = 2
 
 class PREVIEW_SIZE:
 	SMALL = 240
