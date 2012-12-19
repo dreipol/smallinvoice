@@ -69,9 +69,9 @@ def test_invoice_pdf():
 def test_invoice_preview():
 	client =  Client("ch", TEST_API_TOKEN)
 	preview  = client.invoices.preview(25676, 1, PREVIEW_SIZE.SMALL)
-	f = open("/Users/phil/test2.jpg", "wb")
-	f.write(preview)
-	f.close()
+	#f = open("/Users/phil/test2.jpg", "wb")
+	#f.write(preview)
+	#f.close()
 	assert len(preview)>0
 
 
