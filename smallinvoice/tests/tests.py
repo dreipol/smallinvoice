@@ -70,70 +70,70 @@ def test_offers():
 	result = client.offers.all()
 	assert len(result) == 0
 
-#def test_offer_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.offers.details(1)
-#	assert details["totalamount"] > "0"
+def test_offer_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.offers.details(1)
+	assert details["totalamount"] > "0"
 
-#def test_offer_pdf():
-#	client =  Client(TEST_API_TOKEN)
-#	pdf = client.offers.pdf(1)
-#	assert len(pdf)>0
+def test_offer_pdf():
+	client =  Client(TEST_API_TOKEN)
+	pdf = client.offers.pdf(1)
+	assert len(pdf)>0
 
-#def test_offer_preview():
-#	client =  Client(TEST_API_TOKEN)
-#	preview  = client.offers.preview(1, 1, PREVIEW_SIZE.SMALL)
-#	assert len(preview)>0
+def test_offer_preview():
+	client =  Client(TEST_API_TOKEN)
+	preview  = client.offers.preview(1, 1, PREVIEW_SIZE.SMALL)
+	assert len(preview)>0
 
 def test_receipts():
 	client =  Client(TEST_API_TOKEN)
 	result = client.receipts.all()
 	assert len(result) == 0
 
-#def test_receipt_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.receipts.details(1)
-#	assert details["totalamount"] > "0"
+def test_receipt_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.receipts.details(1)
+	assert details["totalamount"] > "0"
 
-#def test_receipt_pdf():
-#	client =  Client(TEST_API_TOKEN)
-#	pdf = client.receipts.pdf(1)
-#	assert len(pdf)>0
+def test_receipt_pdf():
+	client =  Client(TEST_API_TOKEN)
+	pdf = client.receipts.pdf(1)
+	assert len(pdf)>0
 
-#def test_receipt_preview():
-#	client =  Client(TEST_API_TOKEN)
-#	preview  = client.receipts.preview(1, 1, PREVIEW_SIZE.SMALL)
-#	assert len(preview)>0
+def test_receipt_preview():
+	client =  Client(TEST_API_TOKEN)
+	preview  = client.receipts.preview(1, 1, PREVIEW_SIZE.SMALL)
+	assert len(preview)>0
 
 def test_letters():
 	client =  Client(TEST_API_TOKEN)
 	result = client.letters.all()
 	assert len(result) == 0
 
-#def test_letter_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.letters.details(1)
-#	assert details["totalamount"] > "0"
+def test_letter_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.letters.details(1)
+	assert details["totalamount"] > "0"
 
-#def test_letter_pdf():
-#	client =  Client(TEST_API_TOKEN)
-#	pdf = client.letters.pdf(1)
-#	assert len(pdf)>0
+def test_letter_pdf():
+	client =  Client(TEST_API_TOKEN)
+	pdf = client.letters.pdf(1)
+	assert len(pdf)>0
 
-#def test_letter_preview():
-#	client =  Client(TEST_API_TOKEN)
-#	preview  = client.letters.preview(1, 1, PREVIEW_SIZE.SMALL)
-#	assert len(preview)>0
+def test_letter_preview():
+	client =  Client(TEST_API_TOKEN)
+	preview  = client.letters.preview(1, 1, PREVIEW_SIZE.SMALL)
+	assert len(preview)>0
 
 def test_get_all_catalog_entries():
 	client = Client(TEST_API_TOKEN)
 	result = client.catalog.all()
 	assert len(result)>0
 
-#def test_catalog_entry_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.catalog.details(1)
-#	assert details["totalamount"] > "0"
+def test_catalog_entry_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.catalog.details(1)
+	assert details["totalamount"] > "0"
 
 def test_get_all_projects():
 	client = Client(TEST_API_TOKEN)
@@ -150,27 +150,27 @@ def test_get_all_costunits():
 	result = client.costunits.all()
 	assert len(result)==0
 
-#def test_costunits_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.costunits.details(1)
-#	assert details["totalamount"] > "0"
+def test_costunits_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.costunits.details(1)
+	assert details["totalamount"] > "0"
 
 def test_get_all_assigns():
 	client = Client(TEST_API_TOKEN)
 	result = client.assigns.all()
 	assert len(result)==0
 
-#def test_assigns_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.assigns.details(1)
-#	assert details["totalamount"] > "0"
+def test_assigns_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.assigns.details(1)
+	assert details["totalamount"] > "0"
 
 def test_get_all_times():
 	client = Client(TEST_API_TOKEN)
 	result = client.times.all()
 	assert len(result)==0
 
-#def test_times_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.times.details(1)
-#	assert details["totalamount"] > "0"
+def test_times_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.times.details(1)
+	assert details["totalamount"] > "0"
