@@ -1,7 +1,7 @@
 __author__ = 'phil'
 from smallinvoice import PREVIEW_SIZE
 
-TEST_API_TOKEN = ""
+TEST_API_TOKEN = "aaac7f912ad6eb47ac13ec9b32a15d09"
 
 from smallinvoice.client import Client, SmallInvoiceConfigurationException, SmallInvoiceConnectionException
 
@@ -48,7 +48,6 @@ def test_authentication_error():
 		client.invoices.all()
 		assert False
 	except SmallInvoiceConnectionException, e:
-		print e.message
 		assert True
 
 def test_invoices():
@@ -74,4 +73,87 @@ def test_invoice_preview():
 	#f.close()
 	assert len(preview)>0
 
+def test_get_all_clients():
+	client = Client("ch", TEST_API_TOKEN)
+	result = client.clients.all()
+	assert len(result)>0
 
+#def test_client_details():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	details = client.clients.details(1001)
+#	assert details["name"] == "Mutter"
+
+def test_offers():
+	client =  Client("ch", TEST_API_TOKEN)
+	result = client.offers.all()
+	assert len(result) == 0
+
+#def test_offer_details():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	details = client.offers.details(1)
+#	assert details["totalamount"] > "0"
+
+#def test_offer_pdf():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	pdf = client.offers.pdf(1)
+#	assert len(pdf)>0
+
+#def test_offer_preview():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	preview  = client.offers.preview(1, 1, PREVIEW_SIZE.SMALL)
+#	assert len(preview)>0
+
+def test_receipts():
+	client =  Client("ch", TEST_API_TOKEN)
+	result = client.receipts.all()
+	assert len(result) == 0
+
+#def test_receipt_details():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	details = client.receipts.details(1)
+#	assert details["totalamount"] > "0"
+
+#def test_receipt_pdf():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	pdf = client.receipts.pdf(1)
+#	assert len(pdf)>0
+
+#def test_receipt_preview():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	preview  = client.receipts.preview(1, 1, PREVIEW_SIZE.SMALL)
+#	assert len(preview)>0
+
+def test_letters():
+	client =  Client("ch", TEST_API_TOKEN)
+	result = client.letters.all()
+	assert len(result) == 0
+
+#def test_letter_details():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	details = client.letters.details(1)
+#	assert details["totalamount"] > "0"
+
+#def test_letter_pdf():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	pdf = client.letters.pdf(1)
+#	assert len(pdf)>0
+
+#def test_letter_preview():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	preview  = client.letters.preview(1, 1, PREVIEW_SIZE.SMALL)
+#	assert len(preview)>0
+
+def test_get_all_catalog_entries():
+	client = Client("ch", TEST_API_TOKEN)
+	result = client.catalog.all()
+	assert len(result)>0
+
+#def test_catalog_entry_details():
+#	client =  Client("ch", TEST_API_TOKEN)
+#	details = client.catalog.details(1)
+#	assert details["totalamount"] > "0"
+
+def test_get_all_unit_types():
+	client = Client("ch", TEST_API_TOKEN)
+	result = client.unittypes.all()
+	assert len(result)>0

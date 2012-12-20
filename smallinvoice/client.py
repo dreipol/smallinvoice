@@ -1,4 +1,10 @@
 from smallinvoice import SmallInvoiceConfigurationException, RESPONSE_TYPE, SmallInvoiceConnectionException
+from smallinvoice.catalog import CatalogClient
+from smallinvoice.customers import CustomerClient
+from smallinvoice.letters import LetterClient
+from smallinvoice.offers import OfferClient
+from smallinvoice.receipts import ReceiptClient
+from smallinvoice.unit_types import UnitTypeClient
 
 __author__ = 'phil'
 import requests
@@ -18,8 +24,14 @@ class Client(object):
 			raise SmallInvoiceConfigurationException(self)
 		self.country_code = country_code
 		self.api_token = api_token
-		self.invoices = InvoiceClient(self)
 
+		self.invoices = InvoiceClient(self)
+		self.clients = CustomerClient(self)
+		self.offers = OfferClient(self)
+		self.receipts = ReceiptClient(self)
+		self.letters = LetterClient(self)
+		self.catalog = CatalogClient(self)
+		self.unittypes = UnitTypeClient(self)
 
 	def get_api_endpoint(self):
 		""" returns the api end-point,respectively the url with the correct subdomain """
