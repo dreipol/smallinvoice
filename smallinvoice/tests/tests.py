@@ -1,7 +1,7 @@
 __author__ = 'phil'
 from smallinvoice import PREVIEW_SIZE
 
-TEST_API_TOKEN = "aaac7f912ad6eb47ac13ec9b32a15d09"
+TEST_API_TOKEN = ""
 
 from smallinvoice.client import Client, SmallInvoiceConfigurationException, SmallInvoiceConnectionException
 
@@ -60,10 +60,10 @@ def test_get_all_clients():
 	result = client.clients.all()
 	assert len(result)>0
 
-#def test_client_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.clients.details(1001)
-#	assert details["name"] == "Mutter"
+def test_client_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.clients.details(1001)
+	assert details["name"] == "Mutter"
 
 def test_offers():
 	client =  Client(TEST_API_TOKEN)
@@ -140,10 +140,10 @@ def test_get_all_projects():
 	result = client.projects.all()
 	assert len(result)==0
 
-#def test_project_details():
-#	client =  Client(TEST_API_TOKEN)
-#	details = client.projects.details(1)
-#	assert details["totalamount"] > "0"
+def test_project_details():
+	client =  Client(TEST_API_TOKEN)
+	details = client.projects.details(1)
+	assert details["totalamount"] > "0"
 
 def test_get_all_costunits():
 	client = Client(TEST_API_TOKEN)
