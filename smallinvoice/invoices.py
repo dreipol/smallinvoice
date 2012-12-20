@@ -1,5 +1,3 @@
-from smallinvoice import RESPONSE_TYPE
-
 __author__ = 'phil'
 
 invoice_list = "invoice/list"

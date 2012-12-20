@@ -1,7 +1,7 @@
 __author__ = 'dreimac1'
 
-all_clients = "client"
-client_details = "client/id/%s"
+all_clients = "client/list"
+client_details = "client/get/id/%s"
 
 class CustomerClient(object):
 
@@ -11,8 +11,8 @@ class CustomerClient(object):
 
 	def all(self):
 		""" returns all Clients """
-		return self.client.request_with_method(all_clients)
+		return self.client.request_with_method(all_clients)["items"]
 
 	def details(self, client_id):
 		""" returns the details to a specific client """
-		return self.client.request_with_method(client_details%(client_id,))
+		return self.client.request_with_method(client_details%(client_id,))["item"]

@@ -1,10 +1,13 @@
-from smallinvoice import SmallInvoiceConfigurationException, RESPONSE_TYPE, SmallInvoiceConnectionException
+from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException
+from smallinvoice.assigns import AssignClient
 from smallinvoice.catalog import CatalogClient
+from smallinvoice.costunits import CostunitClient
 from smallinvoice.customers import CustomerClient
 from smallinvoice.letters import LetterClient
 from smallinvoice.offers import OfferClient
+from smallinvoice.projets import ProjectClient
 from smallinvoice.receipts import ReceiptClient
-from smallinvoice.unit_types import UnitTypeClient
+from smallinvoice.time import TimeClient
 
 __author__ = 'phil'
 import requests
@@ -30,7 +33,10 @@ class Client(object):
 		self.receipts = ReceiptClient(self)
 		self.letters = LetterClient(self)
 		self.catalog = CatalogClient(self)
-		self.unittypes = UnitTypeClient(self)
+		self.projects = ProjectClient(self)
+		self.costunits = CostunitClient(self)
+		self.assigns = AssignClient(self)
+		self.times = TimeClient(self)
 
 	def get_api_endpoint(self):
 		""" returns the api end-point,respectively the url """

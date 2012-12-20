@@ -1,11 +1,9 @@
-from smallinvoice import RESPONSE_TYPE
-
 __author__ = 'dreimac1'
 
-offer_list = "offer"
-offer_details = "offer/id/%s"
-offer_pdf = "offer/id/%s/type/pdf"
-offer_preview = "offer/id/%s/type/preview/page/%s/size/%s"
+offer_list = "offer/list"
+offer_details = "offer/get/id/%s"
+offer_pdf = "offer/pdf/id/%s"
+offer_preview = "offer/preview/id/%s/page/%s/size/%s"
 
 
 class OfferClient(object):
@@ -17,16 +15,16 @@ class OfferClient(object):
 
 	def all(self):
 		""" returns all offers"""
-		return self.client.request_with_method(offer_list)
+		return self.client.request_with_method(offer_list)["items"]
 
 	def details(self, offer_id):
 		""" returns the details to a specific offer """
-		return self.client.request_with_method(offer_details%(offer_id,))
+		return self.client.request_with_method(offer_details%(offer_id,))["item"]
 
 	def pdf(self, offer_id):
 		""" returns the pdf from the offer as binary data """
-		return self.client.request_with_method(offer_pdf%(offer_id,), type=RESPONSE_TYPE.RAW)
+		return self.client.request_with_method(offer_pdf%(offer_id,))
 
 	def preview(self, offer_id, page_number,size):
 		""" returns a preview from the offer and the page with the specified size as binary data """
-		return self.client.request_with_method(offer_preview%(offer_id, page_number,size,), type=RESPONSE_TYPE.RAW)
+		return self.client.request_with_method(offer_preview%(offer_id, page_number,size,))
