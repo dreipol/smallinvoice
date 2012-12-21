@@ -62,67 +62,67 @@ def test_get_all_clients():
 
 def test_client_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.clients.details(1001)
-	assert details["name"] == "Mutter"
+	details = client.clients.details(24401)
+	assert details["addition"] == "Andreas Graf"
 
 def test_offers():
 	client =  Client(TEST_API_TOKEN)
 	result = client.offers.all()
-	assert len(result) == 0
+	assert len(result) > 0
 
 def test_offer_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.offers.details(1)
-	assert details["totalamount"] > "0"
+	details = client.offers.details(26193)
+	assert details["totalamount"] == "1350"
 
 def test_offer_pdf():
 	client =  Client(TEST_API_TOKEN)
-	pdf = client.offers.pdf(1)
+	pdf = client.offers.pdf(26193)
 	assert len(pdf)>0
 
 def test_offer_preview():
 	client =  Client(TEST_API_TOKEN)
-	preview  = client.offers.preview(1, 1, PREVIEW_SIZE.SMALL)
+	preview  = client.offers.preview(26193, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
 
 def test_receipts():
 	client =  Client(TEST_API_TOKEN)
 	result = client.receipts.all()
-	assert len(result) == 0
+	assert len(result) > 0
 
 def test_receipt_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.receipts.details(1)
-	assert details["totalamount"] > "0"
+	details = client.receipts.details(44714)
+	assert details["totalamount"] == "2430"
 
 def test_receipt_pdf():
 	client =  Client(TEST_API_TOKEN)
-	pdf = client.receipts.pdf(1)
+	pdf = client.receipts.pdf(44714)
 	assert len(pdf)>0
 
 def test_receipt_preview():
 	client =  Client(TEST_API_TOKEN)
-	preview  = client.receipts.preview(1, 1, PREVIEW_SIZE.SMALL)
+	preview  = client.receipts.preview(44714, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
 
 def test_letters():
 	client =  Client(TEST_API_TOKEN)
 	result = client.letters.all()
-	assert len(result) == 0
+	assert len(result) > 0
 
 def test_letter_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.letters.details(1)
-	assert details["totalamount"] > "0"
+	details = client.letters.details(32497)
+	assert details["title"] == "dgdsfg"
 
 def test_letter_pdf():
 	client =  Client(TEST_API_TOKEN)
-	pdf = client.letters.pdf(1)
+	pdf = client.letters.pdf(32497)
 	assert len(pdf)>0
 
 def test_letter_preview():
 	client =  Client(TEST_API_TOKEN)
-	preview  = client.letters.preview(1, 1, PREVIEW_SIZE.SMALL)
+	preview  = client.letters.preview(32497, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
 
 def test_get_all_catalog_entries():
@@ -132,8 +132,8 @@ def test_get_all_catalog_entries():
 
 def test_catalog_entry_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.catalog.details(1)
-	assert details["totalamount"] > "0"
+	details = client.catalog.details(1696)
+	assert details["name"] == "Halbe Tage ohne Essen"
 
 def test_get_all_projects():
 	client = Client(TEST_API_TOKEN)
