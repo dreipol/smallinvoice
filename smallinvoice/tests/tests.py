@@ -140,42 +140,42 @@ def test_catalog_entry_details():
 def test_get_all_projects():
 	client = Client(TEST_API_TOKEN)
 	result = client.projects.all()
-	assert len(result)==0
+	assert len(result)>0
 
 def test_project_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.projects.details(1)
-	assert details["totalamount"] > "0"
+	details = client.projects.details(545)
+	assert details["estimate"] == "20"
 
 def test_get_all_costunits():
 	client = Client(TEST_API_TOKEN)
 	result = client.costunits.all()
-	assert len(result)==0
+	assert len(result)>0
 
 def test_costunits_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.costunits.details(1)
-	assert details["totalamount"] > "0"
+	details = client.costunits.details(234)
+	assert details["name"] == "Kostenstellentest"
 
 def test_get_all_assigns():
 	client = Client(TEST_API_TOKEN)
 	result = client.assigns.all()
-	assert len(result)==0
+	assert len(result)>0
 
 def test_assigns_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.assigns.details(1)
-	assert details["totalamount"] > "0"
+	details = client.assigns.details(12542)
+	assert details["employee"] == "Andreas Graf"
 
 def test_get_all_times():
 	client = Client(TEST_API_TOKEN)
 	result = client.times.all()
-	assert len(result)==0
+	assert len(result)>0
 
 def test_times_details():
 	client =  Client(TEST_API_TOKEN)
-	details = client.times.details(1)
-	assert details["totalamount"] > "0"
+	details = client.times.details(7706)
+	assert details["start"] == "0900"
 
 
 def test_add_address():
