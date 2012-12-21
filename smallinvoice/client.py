@@ -1,4 +1,4 @@
-from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException
+from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, BaseJsonEncodableObject, REQUEST_METHOD
 from smallinvoice.assigns import AssignClient
 from smallinvoice.catalog import CatalogClient
 from smallinvoice.costunits import CostunitClient
@@ -47,11 +47,18 @@ class Client(object):
 		return self.get_api_endpoint() + webservice_method + "/token/%s"%(self.api_token,)
 
 
-	def request_with_method(self, method):
+	def request_with_method(self, method, data=None, request_method=REQUEST_METHOD.AUTO):
 		""" Excecutes the request with the specified method and returns either a raw or a parsed json object
 		"""
 		url = self.append_token_to_method(method)
-		result = requests.get(url,verify=False)
+		if data:
+			result = requests.post(url,data={"data":data.encode()}, verify=False)
+		else:
+			if request_method == REQUEST_METHOD.POST:
+				result = requests.post(url,verify=False)
+			else:
+				result = requests.get(url,verify=False)
+
 		if result.status_code != requests.codes.ok:
 			raise SmallInvoiceConnectionException(result.status_code, result.text)
 		else:

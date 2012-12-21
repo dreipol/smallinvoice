@@ -1,3 +1,5 @@
+from smallinvoice.customers import Address, Customer, CUSTOMER_TYPE, CUSTOMER_GENDER
+
 __author__ = 'phil'
 from smallinvoice import PREVIEW_SIZE
 
@@ -174,3 +176,16 @@ def test_times_details():
 	client =  Client(TEST_API_TOKEN)
 	details = client.times.details(1)
 	assert details["totalamount"] > "0"
+
+
+def test_add_address():
+	a = Address(primary=1, street="Kernstrasse", streetno="60", city="Zurich", code="8004", country="CH")
+	c = Customer(type=CUSTOMER_TYPE.PRIVATE, gender=CUSTOMER_GENDER.MALE, name="Hans Muster", language="DE", addresses=[a])
+	client = Client(TEST_API_TOKEN)
+	client_id = client.clients.add(c)
+	details=client.clients.details(client_id)
+	assert details["name"] == "Hans Muster"
+	client.clients.delete(client_id)
+
+
+
