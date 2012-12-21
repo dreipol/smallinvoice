@@ -55,8 +55,9 @@ class Client(object):
 		if result.status_code != requests.codes.ok:
 			raise SmallInvoiceConnectionException(result.status_code, result.text)
 		else:
-			#currentl text/html is the default, not application/json
-			if 'text/html' in result.headers.get('content-type'):
+			#currently smallinvoice.ch sets text/html as default, not application/json
+			content_type = result.headers.get('content-type')
+			if 'text/html' in content_type or "application/json" in content_type:
 				data = json.loads(result.text)
 				if 'error' in data and data["error"]==True:
 					error_code = data['errorcode']
