@@ -1,10 +1,42 @@
+from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
+
 __author__ = 'phil'
 
 invoice_list = "invoice/list"
 invoice_details = "invoice/get/id/%s"
 invoice_pdf = "invoice/pdf/id/%s"
 invoice_preview = "invoice/preview/id/%s/page/%s/size/%s"
+add_invoice = "invoice/add"
+delete_invoice = "invoice/delete/id/%s"
 
+
+class Position(BaseJsonEncodableObject):
+
+	def __init__(self, type, number, description, cost, unit, amount, name="", discount=None, vat=0):
+
+
+		self.type = type
+		self.number = number
+		self.name = name
+		self.description = description
+		self.cost = cost
+		self.unit = unit
+		self.amount = amount
+		self.discount = discount
+		self.vat = vat
+
+
+class Invoice(BaseJsonEncodableObject):
+
+	def __init__(self, client_id, client_address_id, currency, date, due, language, positions):
+
+		self.client_id = client_id
+		self.client_address_id = client_address_id
+		self.currency = currency
+		self.date = date
+		self.due = due
+		self.language = language
+		self.positions = positions
 
 class InvoiceClient(object):
 	""" This class wraps all invoice related api
@@ -28,3 +60,9 @@ class InvoiceClient(object):
 	def preview(self, invoice_id, page_number,size):
 		""" returns a preview from the invoice and the page with the specified size as binary data """
 		return self.client.request_with_method(invoice_preview%(invoice_id, page_number,size,))
+
+	def add(self, client):
+		return self.client.request_with_method(add_invoice, data=client)["id"]
+
+	def delete(self, invoice_id):
+		return self.client.request_with_method(delete_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)

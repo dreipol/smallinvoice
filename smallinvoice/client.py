@@ -52,6 +52,7 @@ class Client(object):
 		"""
 		url = self.append_token_to_method(method)
 		if data:
+			print data.encode()
 			result = requests.post(url,data={"data":data.encode()}, verify=False)
 		else:
 			if request_method == REQUEST_METHOD.POST:
