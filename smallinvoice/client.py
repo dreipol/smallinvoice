@@ -5,7 +5,7 @@ from smallinvoice.costunits import CostunitClient
 from smallinvoice.customers import CustomerClient
 from smallinvoice.letters import LetterClient
 from smallinvoice.offers import OfferClient
-from smallinvoice.projets import ProjectClient
+from smallinvoice.projects import ProjectClient
 from smallinvoice.receipts import ReceiptClient
 from smallinvoice.time import TimeClient
 

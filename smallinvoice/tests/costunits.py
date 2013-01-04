@@ -11,3 +11,11 @@ def test_costunits_details():
 	client =  Client(TEST_API_TOKEN)
 	details = client.costunits.details(234)
 	assert details["name"] == "Kostenstellentest"
+
+def test_add_costunit():
+	c = Costunit(name="Testunit", status=1)
+	client = Client(TEST_API_TOKEN)
+	costunit_id = client.costunits.add(c)
+	details=client.costunits.details(costunit_id)
+	assert details["name"] == "Testunit"
+	client.costunits.delete(costunit_id)

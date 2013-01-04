@@ -1,9 +1,40 @@
+from smallinvoice import BaseJsonEncodableObject, REQUEST_METHOD
+
 __author__ = 'dreimac1'
 
 offer_list = "offer/list"
 offer_details = "offer/get/id/%s"
 offer_pdf = "offer/pdf/id/%s"
 offer_preview = "offer/preview/id/%s/page/%s/size/%s"
+add_offer = "offer/add"
+delete_offer = "offer/delete/id/%s"
+
+class Position(BaseJsonEncodableObject):
+
+	def __init__(self, type, number, description, cost, unit, amount, name="", discount=None, vat=0):
+
+
+		self.type = type
+		self.number = number
+		self.name = name
+		self.description = description
+		self.cost = cost
+		self.unit = unit
+		self.amount = amount
+		self.discount = discount
+		self.vat = vat
+
+class Offer(BaseJsonEncodableObject):
+	def __init__(self, client_id, client_address_id, currency, date, due, language, positions):
+
+
+		self.client_id = client_id
+		self.client_address_id = client_address_id
+		self.currency = currency
+		self.date = date
+		self.due = due
+		self.language = language
+		self.positions = positions
 
 
 class OfferClient(object):
@@ -28,3 +59,9 @@ class OfferClient(object):
 	def preview(self, offer_id, page_number,size):
 		""" returns a preview from the offer and the page with the specified size as binary data """
 		return self.client.request_with_method(offer_preview%(offer_id, page_number,size,))
+
+	def add(self, client):
+		return self.client.request_with_method(add_offer, data=client)["id"]
+
+	def delete(self, offer_id):
+		return self.client.request_with_method(delete_offer%(offer_id,), request_method=REQUEST_METHOD.POST)

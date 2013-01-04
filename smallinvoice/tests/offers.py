@@ -22,3 +22,14 @@ def test_offer_preview():
 	client =  Client(TEST_API_TOKEN)
 	preview  = client.offers.preview(26193, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
+
+def test_add_offer():
+	p = Position(type=1, number=2, name="Basisbeitrag", description="Test", cost=6000, unit=3, amount=1)
+	o = Offer(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", due="2013-01-24", language="de", positions=[p])
+	client = Client(TEST_API_TOKEN)
+	offer_id = client.offers.add(o)
+	details=client.offers.details(offer_id)
+
+	the_position = details["positions"][0]
+	assert the_position["description"] == "Test"
+	client.offers.delete(offer_id)

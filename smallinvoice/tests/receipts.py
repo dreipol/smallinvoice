@@ -22,3 +22,14 @@ def test_receipt_preview():
 	client =  Client(TEST_API_TOKEN)
 	preview  = client.receipts.preview(44714, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
+
+def test_add_receipt():
+	p = Position(type=1, number=2, name="Basisbeitrag", description="Test", cost=6000, unit=3, amount=1)
+	r = Receipt(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", language="de", positions=[p])
+	client = Client(TEST_API_TOKEN)
+	receipt_id = client.receipts.add(r)
+	details=client.receipts.details(receipt_id)
+
+	the_position = details["positions"][0]
+	assert the_position["description"] == "Test"
+	client.receipts.delete(receipt_id)

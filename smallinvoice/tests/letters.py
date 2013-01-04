@@ -22,3 +22,11 @@ def test_letter_preview():
 	client =  Client(TEST_API_TOKEN)
 	preview  = client.letters.preview(32497, 1, PREVIEW_SIZE.SMALL)
 	assert len(preview)>0
+
+def test_add_letter():
+	l = Letter(client_id=24401, client_address_id=24461, date="2013-01-04", title="Python-Test")
+	client = Client(TEST_API_TOKEN)
+	letter_id = client.letters.add(l)
+	details=client.letters.details(letter_id)
+	assert details["title"] == "Python-Test"
+	client.letters.delete(letter_id)

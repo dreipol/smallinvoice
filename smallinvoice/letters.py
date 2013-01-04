@@ -1,9 +1,20 @@
+from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
+
 __author__ = 'dreimac1'
 
 letter_list = "letter/list"
 letter_details = "letter/get/id/%s"
 letter_pdf = "letter/pdf/id/%s"
 letter_preview = "letter/preview/id/%s/page/%s/size/%s"
+add_letter = "letter/add"
+delete_letter = "letter/delete/id/%s"
+
+class Letter(BaseJsonEncodableObject):
+	def __init__(self, client_id, client_address_id, date, title):
+		self.client_id = client_id
+		self.client_address_id = client_address_id
+		self.date =date
+		self.title = title
 
 
 class LetterClient(object):
@@ -28,3 +39,9 @@ class LetterClient(object):
 	def preview(self, letter_id, page_number,size):
 		""" returns a preview from the letter and the page with the specified size as binary data """
 		return self.client.request_with_method(letter_preview%(letter_id, page_number,size,))
+
+	def add(self, client):
+		return self.client.request_with_method(add_letter, data=client)["id"]
+
+	def delete(self, letter_id):
+		return self.client.request_with_method(delete_letter%(letter_id,), request_method=REQUEST_METHOD.POST)
