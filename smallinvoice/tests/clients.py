@@ -5,6 +5,7 @@ from smallinvoice.tests import TEST_API_TOKEN
 def test_get_all_clients():
 	client = Client(TEST_API_TOKEN)
 	result = client.clients.all()
+	print(result)
 	assert len(result)>0
 
 def test_client_details():

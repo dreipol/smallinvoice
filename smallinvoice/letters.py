@@ -13,7 +13,7 @@ class Letter(BaseJsonEncodableObject):
 	def __init__(self, client_id, client_address_id, date, title):
 		self.client_id = client_id
 		self.client_address_id = client_address_id
-		self.date =date
+		self.date = date
 		self.title = title
 
 

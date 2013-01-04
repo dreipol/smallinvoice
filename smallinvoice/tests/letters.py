@@ -24,8 +24,14 @@ def test_letter_preview():
 	assert len(preview)>0
 
 def test_add_letter():
-	l = Letter(client_id=24401, client_address_id=24461, date="2013-01-04", title="Python-Test")
+
+	l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04", title="Python-Test")
 	client = Client(TEST_API_TOKEN)
+	all_clients = client.clients.all()
+	for customer in all_clients:
+		customer_details = client.clients.details(customer["id"])
+		for address in customer_details["addresses"]:
+			print "%s --> %s" % (customer["id"], address["id"],)
 	letter_id = client.letters.add(l)
 	details=client.letters.details(letter_id)
 	assert details["title"] == "Python-Test"

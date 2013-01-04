@@ -8,6 +8,7 @@ invoice_pdf = "invoice/pdf/id/%s"
 invoice_preview = "invoice/preview/id/%s/page/%s/size/%s"
 add_invoice = "invoice/add"
 delete_invoice = "invoice/delete/id/%s"
+update_invoice = "invoice/edit/id/%s"
 
 
 class Position(BaseJsonEncodableObject):
@@ -66,3 +67,6 @@ class InvoiceClient(object):
 
 	def delete(self, invoice_id):
 		return self.client.request_with_method(delete_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, invoice_id):
+		return self.client.request_with_method(update_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)["item"]

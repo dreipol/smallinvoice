@@ -5,11 +5,13 @@ from smallinvoice.tests import TEST_API_TOKEN
 def test_get_all_assigns():
 	client = Client(TEST_API_TOKEN)
 	result = client.assigns.all()
+	print result
 	assert len(result)>0
 
 def test_assigns_details():
 	client =  Client(TEST_API_TOKEN)
 	details = client.assigns.details(12542)
+	print(details)
 	assert details["employee"] == "Andreas Graf"
 
 def test_add_assign():
