@@ -33,3 +33,14 @@ def test_add_receipt():
 	the_position = details["positions"][0]
 	assert the_position["description"] == "Test"
 	client.receipts.delete(receipt_id)
+
+def test_update_receipt():
+	p = Position(type=1, number=2, name="Basisbeitrag", description="Update", cost=2430, unit=3, amount=1)
+	p.id = 51090
+	r = Receipt(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", language="de", positions=[p])
+	r.id = 44714
+	client =  Client(TEST_API_TOKEN)
+	client.receipts.update(r.id,r)
+	details = client.receipts.details(r.id)
+	the_position = details["positions"][0]
+	assert the_position["description"] == "Update"

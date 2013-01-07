@@ -36,3 +36,11 @@ def test_add_letter():
 	details=client.letters.details(letter_id)
 	assert details["title"] == "Python-Test"
 	client.letters.delete(letter_id)
+
+def test_update_letter():
+	l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04", title="Python-Update")
+	l.id = 32497
+	client =  Client(TEST_API_TOKEN)
+	client.letters.update(l.id,l)
+	details = client.letters.details(l.id)
+	assert details["title"] == "Python-Update"

@@ -39,6 +39,8 @@ class Invoice(BaseJsonEncodableObject):
 		self.language = language
 		self.positions = positions
 
+
+
 class InvoiceClient(object):
 	""" This class wraps all invoice related api
 	"""
@@ -68,5 +70,5 @@ class InvoiceClient(object):
 	def delete(self, invoice_id):
 		return self.client.request_with_method(delete_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)
 
-	def update(self, invoice_id):
-		return self.client.request_with_method(update_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)["item"]
+	def update(self, invoice_id, invoice):
+		return self.client.request_with_method(update_invoice%(invoice_id,), data=invoice)

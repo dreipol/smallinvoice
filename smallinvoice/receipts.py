@@ -8,6 +8,7 @@ receipt_pdf = "receipt/pdf/id/%s"
 receipt_preview = "receipt/preview/id/%s/page/%s/size/%s"
 add_receipt = "receipt/add"
 delete_receipt = "receipt/delete/id/%s"
+update_receipt = "receipt/edit/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -63,3 +64,6 @@ class ReceiptClient(object):
 
 	def delete(self, receipt_id):
 		return self.client.request_with_method(delete_receipt%(receipt_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, receipt_id, receipt):
+		return self.client.request_with_method(update_receipt%(receipt_id,), data=receipt)

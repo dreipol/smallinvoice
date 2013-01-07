@@ -6,6 +6,7 @@ assign_list = "assign/list"
 assign_details = "assign/get/id/%s"
 add_assign = "assign/add"
 delete_assign = "assign/delete/id/%s"
+update_assign = "assign/edit/id/%s"
 
 class Assign(BaseJsonEncodableObject):
 
@@ -35,3 +36,6 @@ class AssignClient(object):
 
 	def delete(self, assign_id):
 		return self.client.request_with_method(delete_assign%(assign_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, assign_id, assign):
+		return self.client.request_with_method(update_assign%(assign_id,), data=assign)

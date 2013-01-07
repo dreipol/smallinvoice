@@ -19,3 +19,11 @@ def test_add_time():
 	details=client.times.details(time_id)
 	assert details["start"] == "0900"
 	client.times.delete(time_id)
+
+def test_update_time():
+	t = Time(start="0900", end="1200", date="2013-01-03")
+	t.id = 7706
+	client =  Client(TEST_API_TOKEN)
+	client.times.update(t.id,t)
+	details = client.times.details(t.id)
+	assert details["start"] == "0900"

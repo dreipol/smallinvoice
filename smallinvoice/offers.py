@@ -8,6 +8,7 @@ offer_pdf = "offer/pdf/id/%s"
 offer_preview = "offer/preview/id/%s/page/%s/size/%s"
 add_offer = "offer/add"
 delete_offer = "offer/delete/id/%s"
+update_offer = "offer/edit/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -65,3 +66,6 @@ class OfferClient(object):
 
 	def delete(self, offer_id):
 		return self.client.request_with_method(delete_offer%(offer_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, offer_id, offer):
+		return self.client.request_with_method(update_offer%(offer_id,), data=offer)

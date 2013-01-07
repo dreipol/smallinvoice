@@ -6,6 +6,7 @@ project_list = "project/list"
 project_details = "project/get/id/%s"
 add_project = "project/add"
 delete_project = "project/delete/id/%s"
+update_project = "project/edit/id/%s"
 
 class Project(BaseJsonEncodableObject):
 	def __init__(self, name, client_id):
@@ -33,3 +34,6 @@ class ProjectClient(object):
 
 	def delete(self, project_id):
 		return self.client.request_with_method(delete_project%(project_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, project_id, project):
+		return self.client.request_with_method(update_project%(project_id,), data=project)

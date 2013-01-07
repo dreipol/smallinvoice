@@ -8,6 +8,7 @@ letter_pdf = "letter/pdf/id/%s"
 letter_preview = "letter/preview/id/%s/page/%s/size/%s"
 add_letter = "letter/add"
 delete_letter = "letter/delete/id/%s"
+update_letter = "letter/edit/id/%s"
 
 class Letter(BaseJsonEncodableObject):
 	def __init__(self, client_id, client_address_id, date, title):
@@ -45,3 +46,6 @@ class LetterClient(object):
 
 	def delete(self, letter_id):
 		return self.client.request_with_method(delete_letter%(letter_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, letter_id, letter):
+		return self.client.request_with_method(update_letter%(letter_id,), data=letter)

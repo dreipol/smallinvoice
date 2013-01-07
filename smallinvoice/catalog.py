@@ -6,6 +6,7 @@ all_cataloge_entries = "catalog/list"
 catalog_entry_details = "catalog/get/id/%s"
 add_catalog = "catalog/add"
 delete_catalog = "catalog/delete/id/%s"
+update_catalog = "catalog/edit/id/%s"
 
 class Catalog(BaseJsonEncodableObject):
 	def __init__(self, type, unit, name, cost_per_unit, vat=0):
@@ -38,3 +39,6 @@ class CatalogClient(object):
 
 	def delete(self, catalog_id):
 		return self.client.request_with_method(delete_catalog%(catalog_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, catalog_id, catalog):
+		return self.client.request_with_method(update_catalog%(catalog_id,), data=catalog)

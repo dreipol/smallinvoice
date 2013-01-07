@@ -11,7 +11,6 @@ def test_invoices():
 def test_invoice_details():
 	client =  Client(TEST_API_TOKEN)
 	details = client.invoices.details(25676)
-	print details
 	assert details["totalamount"] == "1440"
 
 def test_invoice_pdf():
@@ -27,6 +26,7 @@ def test_invoice_preview():
 	#f.close()
 	assert len(preview)>0
 
+
 def test_add_invoice():
 	p = Position(type=1, number=2, name="Basisbeitrag", description="Test", cost=6000, unit=3, amount=1)
 	i = Invoice(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", due="2013-01-24", language="de", positions=[p])
@@ -37,3 +37,14 @@ def test_add_invoice():
 	the_position = details["positions"][0]
 	assert the_position["name"] == "Basisbeitrag"
 	client.invoices.delete(invoice_id)
+
+def test_update_invoice():
+	p = Position(type=1, number=2, name="Basisbeitrag", description="Update", cost=1440, unit=3, amount=1)
+	p.id = 51090
+	i = Invoice(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", due="2013-01-24", language="de", positions=[p])
+	i.id = 25676
+	client =  Client(TEST_API_TOKEN)
+	client.invoices.update(i.id,i)
+	details = client.invoices.details(i.id)
+	the_position = details["positions"][0]
+	assert the_position["description"] == "Update"

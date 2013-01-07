@@ -33,3 +33,14 @@ def test_add_offer():
 	the_position = details["positions"][0]
 	assert the_position["description"] == "Test"
 	client.offers.delete(offer_id)
+
+def test_update_offer():
+	p = Position(type=1, number=2, name="Basisbeitrag", description="Update", cost=1350, unit=3, amount=1)
+	p.id = 51090
+	o = Offer(client_id=24401, client_address_id=24461, currency="CHF", date="2013-01-03", due="2013-01-24", language="de", positions=[p])
+	o.id = 26193
+	client =  Client(TEST_API_TOKEN)
+	client.offers.update(o.id,o)
+	details = client.offers.details(o.id)
+	the_position = details["positions"][0]
+	assert the_position["description"] == "Update"

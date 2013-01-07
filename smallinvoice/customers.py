@@ -6,6 +6,7 @@ all_clients = "client/list"
 client_details = "client/get/id/%s"
 add_client = "client/add"
 delete_client = "client/delete/id/%s"
+update_client = "client/edit/id/%s"
 
 class Address(BaseJsonEncodableObject):
 
@@ -58,3 +59,6 @@ class CustomerClient(object):
 
 	def delete(self, client_id):
 		return self.client.request_with_method(delete_client%(client_id,), request_method=REQUEST_METHOD.POST)
+
+	def update(self, client_id, client):
+		return self.client.request_with_method(update_client%(client_id,), data=client)
