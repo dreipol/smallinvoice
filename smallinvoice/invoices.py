@@ -9,6 +9,7 @@ invoice_preview = "invoice/preview/id/%s/page/%s/size/%s"
 add_invoice = "invoice/add"
 delete_invoice = "invoice/delete/id/%s"
 update_invoice = "invoice/edit/id/%s"
+email_invoice = "invoice/email/id/%s"
 
 
 class Position(BaseJsonEncodableObject):
@@ -39,7 +40,23 @@ class Invoice(BaseJsonEncodableObject):
 		self.language = language
 		self.positions = positions
 
+class Recipient(BaseJsonEncodableObject):
 
+	def __init__(self, cc, email, name):
+
+		self.cc = cc
+		self.email = email
+		self.name = name
+
+class Mail(BaseJsonEncodableObject):
+
+	def __init__(self, subject, body, sendstatus, afterstatus, recipients):
+
+		self.subject = subject
+		self.body = body
+		self.sendstatus = sendstatus
+		self.afterstatus = afterstatus
+		self.recipients = recipients
 
 class InvoiceClient(object):
 	""" This class wraps all invoice related api
@@ -65,10 +82,16 @@ class InvoiceClient(object):
 		return self.client.request_with_method(invoice_preview%(invoice_id, page_number,size,))
 
 	def add(self, client):
+		""" returns the id of the new created invoice """
 		return self.client.request_with_method(add_invoice, data=client)["id"]
 
 	def delete(self, invoice_id):
+		""" returns an error if the invoice couldn't be deleted """
 		return self.client.request_with_method(delete_invoice%(invoice_id,), request_method=REQUEST_METHOD.POST)
 
 	def update(self, invoice_id, invoice):
+		""" returns an error if the invoice couldn't be updated """
 		return self.client.request_with_method(update_invoice%(invoice_id,), data=invoice)
+
+	def email(self, invoice_id, invoice):
+		return self.client.request_with_method(email_invoice%(invoice_id,), data=invoice)

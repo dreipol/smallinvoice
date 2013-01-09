@@ -44,3 +44,11 @@ def test_update_letter():
 	client.letters.update(l.id,l)
 	details = client.letters.details(l.id)
 	assert details["title"] == "Python-Update"
+
+def test_email_letter():
+	r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
+	m = Mail(subject="Testsubject", body="Test email body", sendstatus=1, afterstatus=1, recipients=[r])
+	m.id = 32497
+	client = Client(TEST_API_TOKEN)
+	client.letters.email(m.id, m)
+	assert True

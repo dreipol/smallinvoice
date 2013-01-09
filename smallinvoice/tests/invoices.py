@@ -21,9 +21,6 @@ def test_invoice_pdf():
 def test_invoice_preview():
 	client =  Client(TEST_API_TOKEN)
 	preview  = client.invoices.preview(25676, 1, PREVIEW_SIZE.SMALL)
-	#f = open("/Users/phil/test2.jpg", "wb")
-	#f.write(preview)
-	#f.close()
 	assert len(preview)>0
 
 
@@ -48,3 +45,11 @@ def test_update_invoice():
 	details = client.invoices.details(i.id)
 	the_position = details["positions"][0]
 	assert the_position["description"] == "Update"
+
+def test_email_invoice():
+	r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
+	m = Mail(subject="Testsubject", body="Test email body", sendstatus=1, afterstatus=1, recipients=[r])
+	m.id = 25676
+	client = Client(TEST_API_TOKEN)
+	client.invoices.email(m.id, m)
+	assert True

@@ -44,3 +44,11 @@ def test_update_receipt():
 	details = client.receipts.details(r.id)
 	the_position = details["positions"][0]
 	assert the_position["description"] == "Update"
+
+def test_email_receipt():
+	r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
+	m = Mail(subject="Testsubject", body="Test email body", sendstatus=1, afterstatus=1, recipients=[r])
+	m.id = 44714
+	client = Client(TEST_API_TOKEN)
+	client.receipts.email(m.id, m)
+	assert True

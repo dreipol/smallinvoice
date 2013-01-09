@@ -9,6 +9,7 @@ receipt_preview = "receipt/preview/id/%s/page/%s/size/%s"
 add_receipt = "receipt/add"
 delete_receipt = "receipt/delete/id/%s"
 update_receipt = "receipt/edit/id/%s"
+email_receipt = "receipt/email/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -35,6 +36,24 @@ class Receipt(BaseJsonEncodableObject):
 		self.date = date
 		self.language = language
 		self.positions = positions
+
+class Recipient(BaseJsonEncodableObject):
+
+	def __init__(self, cc, email, name):
+
+		self.cc = cc
+		self.email = email
+		self.name = name
+
+class Mail(BaseJsonEncodableObject):
+
+	def __init__(self, subject, body, sendstatus, afterstatus, recipients):
+
+		self.subject = subject
+		self.body = body
+		self.sendstatus = sendstatus
+		self.afterstatus = afterstatus
+		self.recipients = recipients
 
 class ReceiptClient(object):
 	""" This class wraps all receipt related api
@@ -67,3 +86,6 @@ class ReceiptClient(object):
 
 	def update(self, receipt_id, receipt):
 		return self.client.request_with_method(update_receipt%(receipt_id,), data=receipt)
+
+	def email(self, receipt_id, receipt):
+		return self.client.request_with_method(email_receipt%(receipt_id,), data=receipt)

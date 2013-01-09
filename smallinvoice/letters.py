@@ -9,6 +9,7 @@ letter_preview = "letter/preview/id/%s/page/%s/size/%s"
 add_letter = "letter/add"
 delete_letter = "letter/delete/id/%s"
 update_letter = "letter/edit/id/%s"
+email_letter = "letter/email/id/%s"
 
 class Letter(BaseJsonEncodableObject):
 	def __init__(self, client_id, client_address_id, date, title):
@@ -16,6 +17,24 @@ class Letter(BaseJsonEncodableObject):
 		self.client_address_id = client_address_id
 		self.date = date
 		self.title = title
+
+class Recipient(BaseJsonEncodableObject):
+
+	def __init__(self, cc, email, name):
+
+		self.cc = cc
+		self.email = email
+		self.name = name
+
+class Mail(BaseJsonEncodableObject):
+
+	def __init__(self, subject, body, sendstatus, afterstatus, recipients):
+
+		self.subject = subject
+		self.body = body
+		self.sendstatus = sendstatus
+		self.afterstatus = afterstatus
+		self.recipients = recipients
 
 
 class LetterClient(object):
@@ -49,3 +68,6 @@ class LetterClient(object):
 
 	def update(self, letter_id, letter):
 		return self.client.request_with_method(update_letter%(letter_id,), data=letter)
+
+	def email(self, letter_id, letter):
+		return self.client.request_with_method(email_letter%(letter_id,), data=letter)

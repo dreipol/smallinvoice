@@ -9,6 +9,7 @@ offer_preview = "offer/preview/id/%s/page/%s/size/%s"
 add_offer = "offer/add"
 delete_offer = "offer/delete/id/%s"
 update_offer = "offer/edit/id/%s"
+email_offer = "offer/email/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -36,6 +37,24 @@ class Offer(BaseJsonEncodableObject):
 		self.due = due
 		self.language = language
 		self.positions = positions
+
+class Recipient(BaseJsonEncodableObject):
+
+	def __init__(self, cc, email, name):
+
+		self.cc = cc
+		self.email = email
+		self.name = name
+
+class Mail(BaseJsonEncodableObject):
+
+	def __init__(self, subject, body, sendstatus, afterstatus, recipients):
+
+		self.subject = subject
+		self.body = body
+		self.sendstatus = sendstatus
+		self.afterstatus = afterstatus
+		self.recipients = recipients
 
 
 class OfferClient(object):
@@ -69,3 +88,6 @@ class OfferClient(object):
 
 	def update(self, offer_id, offer):
 		return self.client.request_with_method(update_offer%(offer_id,), data=offer)
+
+	def email(self, offer_id, offer):
+		return self.client.request_with_method(email_offer%(offer_id,), data=offer)
