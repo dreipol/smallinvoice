@@ -53,3 +53,10 @@ def test_email_invoice():
 	client = Client(TEST_API_TOKEN)
 	client.invoices.email(m.id, m)
 	assert True
+
+def test_status_invoice():
+	s = State(status=State.REMINDER)
+	client = Client(TEST_API_TOKEN)
+	client.invoices.status(25676,status=s)
+	assert client.invoices.details(25676)["status"] == "3"
+

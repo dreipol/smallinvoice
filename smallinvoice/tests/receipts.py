@@ -52,3 +52,9 @@ def test_email_receipt():
 	client = Client(TEST_API_TOKEN)
 	client.receipts.email(m.id, m)
 	assert True
+
+def test_status_receipt():
+	s = State(status=State.PAID)
+	client = Client(TEST_API_TOKEN)
+	client.receipts.status(44714,status=s)
+	assert client.receipts.details(44714)["status"] == "10"

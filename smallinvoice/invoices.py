@@ -10,7 +10,7 @@ add_invoice = "invoice/add"
 delete_invoice = "invoice/delete/id/%s"
 update_invoice = "invoice/edit/id/%s"
 email_invoice = "invoice/email/id/%s"
-
+status_invoice = "invoice/status/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -58,6 +58,16 @@ class Mail(BaseJsonEncodableObject):
 		self.afterstatus = afterstatus
 		self.recipients = recipients
 
+class State(BaseJsonEncodableObject):
+
+	DRAFT = 0
+	SENT = 1
+	PAID = 2
+	REMINDER = 3
+
+	def __init__(self, status):
+		self.status = status
+
 class InvoiceClient(object):
 	""" This class wraps all invoice related api
 	"""
@@ -95,3 +105,6 @@ class InvoiceClient(object):
 
 	def email(self, invoice_id, invoice):
 		return self.client.request_with_method(email_invoice%(invoice_id,), data=invoice)
+
+	def status(self, invoice_id, status):
+		return self.client.request_with_method(status_invoice%(invoice_id,), data=status)

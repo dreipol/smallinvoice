@@ -10,6 +10,7 @@ add_letter = "letter/add"
 delete_letter = "letter/delete/id/%s"
 update_letter = "letter/edit/id/%s"
 email_letter = "letter/email/id/%s"
+status_letter = "letter/status/id/%s"
 
 class Letter(BaseJsonEncodableObject):
 	def __init__(self, client_id, client_address_id, date, title):
@@ -36,6 +37,14 @@ class Mail(BaseJsonEncodableObject):
 		self.afterstatus = afterstatus
 		self.recipients = recipients
 
+
+class State(BaseJsonEncodableObject):
+
+	DRAFT = 7
+	SENT = 1
+
+	def __init__(self, status):
+		self.status = status
 
 class LetterClient(object):
 	""" This class wraps all letter related api
@@ -71,3 +80,6 @@ class LetterClient(object):
 
 	def email(self, letter_id, letter):
 		return self.client.request_with_method(email_letter%(letter_id,), data=letter)
+
+	def status(self, letter_id, status):
+		return self.client.request_with_method(status_letter%(letter_id,), data=status)

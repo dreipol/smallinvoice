@@ -11,7 +11,8 @@ def test_letters():
 def test_letter_details():
 	client =  Client(TEST_API_TOKEN)
 	details = client.letters.details(32497)
-	assert details["title"] == "dgdsfg"
+	print details
+	assert details["title"] == "Python-Update"
 
 def test_letter_pdf():
 	client =  Client(TEST_API_TOKEN)
@@ -52,3 +53,9 @@ def test_email_letter():
 	client = Client(TEST_API_TOKEN)
 	client.letters.email(m.id, m)
 	assert True
+
+def test_status_letter():
+	s = State(status=State.DRAFT)
+	client = Client(TEST_API_TOKEN)
+	client.letters.status(32497,status=s)
+	assert client.letters.details(32497)["status"] == "7"

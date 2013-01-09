@@ -52,3 +52,9 @@ def test_email_offer():
 	client = Client(TEST_API_TOKEN)
 	client.offers.email(m.id, m)
 	assert True
+
+def test_status_invoice():
+	s = State(status=State.OK)
+	client = Client(TEST_API_TOKEN)
+	client.offers.status(26193,status=s)
+	assert client.offers.details(26193)["status"] == "9"

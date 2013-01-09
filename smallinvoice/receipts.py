@@ -10,6 +10,7 @@ add_receipt = "receipt/add"
 delete_receipt = "receipt/delete/id/%s"
 update_receipt = "receipt/edit/id/%s"
 email_receipt = "receipt/email/id/%s"
+status_receipt = "receipt/status/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -55,6 +56,15 @@ class Mail(BaseJsonEncodableObject):
 		self.afterstatus = afterstatus
 		self.recipients = recipients
 
+class State(BaseJsonEncodableObject):
+
+	DRAFT = 0
+	SENT = 1
+	PAID = 10
+
+	def __init__(self, status):
+		self.status = status
+
 class ReceiptClient(object):
 	""" This class wraps all receipt related api
 	"""
@@ -89,3 +99,6 @@ class ReceiptClient(object):
 
 	def email(self, receipt_id, receipt):
 		return self.client.request_with_method(email_receipt%(receipt_id,), data=receipt)
+
+	def status(self, receipt_id, status):
+		return self.client.request_with_method(status_receipt%(receipt_id,), data=status)

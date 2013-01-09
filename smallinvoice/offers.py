@@ -10,6 +10,7 @@ add_offer = "offer/add"
 delete_offer = "offer/delete/id/%s"
 update_offer = "offer/edit/id/%s"
 email_offer = "offer/email/id/%s"
+status_offer = "offer/status/id/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -56,6 +57,16 @@ class Mail(BaseJsonEncodableObject):
 		self.afterstatus = afterstatus
 		self.recipients = recipients
 
+class State(BaseJsonEncodableObject):
+
+	DRAFT = 0
+	SENT = 1
+	OK = 9
+	REMINDER = 10
+
+	def __init__(self, status):
+		self.status = status
+
 
 class OfferClient(object):
 	""" This class wraps all offer related api
@@ -91,3 +102,6 @@ class OfferClient(object):
 
 	def email(self, offer_id, offer):
 		return self.client.request_with_method(email_offer%(offer_id,), data=offer)
+
+	def status(self, offer_id, status):
+		return self.client.request_with_method(status_offer%(offer_id,), data=status)
