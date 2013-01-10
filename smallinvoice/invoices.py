@@ -11,6 +11,7 @@ delete_invoice = "invoice/delete/id/%s"
 update_invoice = "invoice/edit/id/%s"
 email_invoice = "invoice/email/id/%s"
 status_invoice = "invoice/status/id/%s"
+invoice_payment = "invoice/payment/is/%s"
 
 class Position(BaseJsonEncodableObject):
 
@@ -57,6 +58,14 @@ class Mail(BaseJsonEncodableObject):
 		self.sendstatus = sendstatus
 		self.afterstatus = afterstatus
 		self.recipients = recipients
+
+
+class Payment(BaseJsonEncodableObject):
+	def __init__(self, amount, date, type, keep_status):
+		self.amount = amount
+		self.date = date
+		self.type = type
+		self.keep_status = keep_status
 
 class State(BaseJsonEncodableObject):
 
@@ -108,3 +117,6 @@ class InvoiceClient(object):
 
 	def status(self, invoice_id, status):
 		return self.client.request_with_method(status_invoice%(invoice_id,), data=status)
+
+	def payment(self, invoice_id, payment):
+		return self.client.request_with_method(invoice_payment%(invoice_id,), data=payment)

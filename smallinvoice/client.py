@@ -66,11 +66,14 @@ class Client(object):
 			#currently smallinvoice.ch sets text/html as default, not application/json
 			content_type = result.headers.get('content-type')
 			if 'text/html' in content_type or "application/json" in content_type:
-				data = json.loads(result.text)
-				if 'error' in data and data["error"]==True:
-					error_code = data['errorcode']
-					error_message = data['errormessage']
-					raise SmallInvoiceConnectionException(error_code, error_message)
-				return data
+				try:
+					data = json.loads(result.text)
+					if 'error' in data and data["error"]==True:
+						error_code = data['errorcode']
+						error_message = data['errormessage']
+						raise SmallInvoiceConnectionException(error_code, error_message)
+					return data
+				except ValueError:
+					raise SmallInvoiceConnectionException("could not parse result from smallinvoice", result.text)
 			else:
 				return result.content
