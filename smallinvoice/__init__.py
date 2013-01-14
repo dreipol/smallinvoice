@@ -1,5 +1,4 @@
-from json import JSONEncoder
-
+import jsonpickle
 __author__ = 'phil'
 
 class PREVIEW_SIZE:
@@ -32,12 +31,9 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
 		message = "Failed to Connect, Status %s; Message: %s" % (status_code, remote_message)
 		super(SmallInvoiceException, self).__init__(message)
 
-class BaseEncoder(JSONEncoder):
-	def default(self,o):
-		return o.__dict__
 
 class BaseJsonEncodableObject():
-	""" This class can be easily encode into a json string by calling encode
+	""" This class can be easily encoded into a json string by calling encode
 	"""
 	def encode(self):
-		return BaseEncoder().encode(self)
+		return jsonpickle.encode(self, unpicklable=False)
