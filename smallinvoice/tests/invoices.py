@@ -61,8 +61,8 @@ def test_status_invoice():
 	assert client.invoices.details(25676)["status"] == "3"
 
 def test_invoice_payment():
-	p = Payment(amount=140, date="2013-09-01", type=1, keep_status=0)
+	p = Payment(amount=1, date="2013-01-03", type=1)
 	print p
 	client = Client(TEST_API_TOKEN)
-	client.invoices.payment(25767, p)
-	assert client.invoices.details(25767)["date"] == "2013-09-01"
+	client.invoices.payment(51090, p)
+	assert client.invoices.details(51090)["date"] == "2013-01-03"

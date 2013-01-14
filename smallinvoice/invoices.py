@@ -61,11 +61,11 @@ class Mail(BaseJsonEncodableObject):
 
 
 class Payment(BaseJsonEncodableObject):
-	def __init__(self, amount, date, type, keep_status):
+	def __init__(self, amount, date, type):
 		self.amount = amount
 		self.date = date
 		self.type = type
-		self.keep_status = keep_status
+
 
 class State(BaseJsonEncodableObject):
 
