@@ -1,4 +1,3 @@
-__author__ = 'phil'
 from distutils.core import setup
 
 setup(
