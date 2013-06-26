@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='smallinvoice',
-    version='0.1.2',
+    version='0.1.3',
     author='dreipol GmbH: Philipp Laeubli, Etienne Wild',
     author_email='dev@dreipol.ch',
     packages=['smallinvoice', 'smallinvoice.tests'],
