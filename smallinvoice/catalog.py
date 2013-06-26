@@ -1,7 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
-__author__ = 'dreimac1'
-
 all_cataloge_entries = "catalog/list"
 catalog_entry_details = "catalog/get/id/%s"
 add_catalog = "catalog/add"

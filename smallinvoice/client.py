@@ -8,8 +8,6 @@ from smallinvoice.offers import OfferClient
 from smallinvoice.projects import ProjectClient
 from smallinvoice.receipts import ReceiptClient
 from smallinvoice.time import TimeClient
-
-__author__ = 'phil'
 import requests
 import json
 from invoices import InvoiceClient

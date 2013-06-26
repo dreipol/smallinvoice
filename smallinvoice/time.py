@@ -1,7 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
-__author__ = 'dreimac1'
-
 time_list = "time/list"
 time_details = "time/get/id/%s"
 add_time = "time/add"

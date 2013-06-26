@@ -1,3 +1,4 @@
+import datetime
 from smallinvoice.client import *
 from smallinvoice.time import *
 from smallinvoice.tests import TEST_API_TOKEN
@@ -16,7 +17,7 @@ def test_times_details():
 
 
 def test_add_time():
-    t = Time(start=900, end=1200, date="2013-01-03")
+    t = Time(start="0900", end="1200", date=datetime.date.today().strftime('%Y-%m-%d'))
     client = Client(TEST_API_TOKEN)
     time_id = client.times.add(t)
     details = client.times.details(time_id)
@@ -25,7 +26,7 @@ def test_add_time():
 
 
 def test_update_time():
-    t = Time(start=900, end=1200, date="2013-01-03")
+    t = Time(start="0900", end="1200", date="2013-01-03")
     t.id = 7706
     client = Client(TEST_API_TOKEN)
     client.times.update(t.id, t)

@@ -1,7 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
-__author__ = 'phil'
-
 invoice_list = "invoice/list"
 invoice_details = "invoice/get/id/%s"
 invoice_pdf = "invoice/pdf/id/%s"

@@ -1,7 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
-__author__ = 'dreimac1'
-
 costunit_list = "costunit/list"
 costunit_details = "costunit/get/id/%s"
 add_costunit = "costunit/add"

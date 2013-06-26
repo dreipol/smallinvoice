@@ -1,7 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
-__author__ = 'dreimac1'
-
 project_list = "project/list"
 project_details = "project/get/id/%s"
 add_project = "project/add"

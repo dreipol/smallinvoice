@@ -1,4 +1,5 @@
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
+
 letter_list = "letter/list"
 letter_details = "letter/get/id/%s"
 letter_pdf = "letter/pdf/id/%s"
