@@ -45,6 +45,6 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
 class BaseJsonEncodableObject():
     """ This class can be easily encoded into a json string by calling encode
     """
-
     def encode(self):
+        jsonpickle.set_encoder_options('json', sort_keys=True)
         return jsonpickle.encode(self, unpicklable=False)
