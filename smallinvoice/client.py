@@ -1,4 +1,5 @@
 from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, BaseJsonEncodableObject, REQUEST_METHOD
+from smallinvoice.accounts import AccountClient
 from smallinvoice.assigns import AssignClient
 from smallinvoice.catalog import CatalogClient
 from smallinvoice.costunits import CostunitClient
@@ -36,6 +37,7 @@ class Client(object):
         self.costunits = CostunitClient(self)
         self.assigns = AssignClient(self)
         self.times = TimeClient(self)
+        self.accounts = AccountClient(self)
 
     def get_api_endpoint(self):
         """ returns the api end-point,respectively the url """
