@@ -29,5 +29,7 @@ The following services are completely wrapped
 
 * Receipts
 
+* Accounts
+
 
 Feel free to add more services if needed.
