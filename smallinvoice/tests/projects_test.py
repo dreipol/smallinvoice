@@ -13,7 +13,7 @@ def test_project_details():
     client = Client(TEST_API_TOKEN)
     details = client.projects.details(545)
     print(details)
-    assert details["estimate"] == "20"
+    assert details["estimate"] == 20
 
 
 def test_add_project():

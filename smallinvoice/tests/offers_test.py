@@ -13,7 +13,7 @@ def test_offers():
 def test_offer_details():
     client = Client(TEST_API_TOKEN)
     details = client.offers.details(26193)
-    assert details["totalamount"] == "1350"
+    assert details["totalamount"] == 1350
 
 
 def test_offer_pdf():
@@ -70,4 +70,4 @@ def test_status_invoice():
     s = State(status=State.OK)
     client = Client(TEST_API_TOKEN)
     client.offers.status(26193, status=s)
-    assert client.offers.details(26193)["status"] == "9"
+    assert client.offers.details(26193)["status"] == 9

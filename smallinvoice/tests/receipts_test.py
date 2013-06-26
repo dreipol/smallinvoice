@@ -13,7 +13,7 @@ def test_receipts():
 def test_receipt_details():
     client = Client(TEST_API_TOKEN)
     details = client.receipts.details(44714)
-    assert details["totalamount"] == "2430"
+    assert details["totalamount"] == 2430
 
 
 def test_receipt_pdf():
@@ -70,4 +70,4 @@ def test_status_receipt():
     s = State(status=State.PAID)
     client = Client(TEST_API_TOKEN)
     client.receipts.status(44714, status=s)
-    assert client.receipts.details(44714)["status"] == "10"
+    assert client.receipts.details(44714)["status"] == 10

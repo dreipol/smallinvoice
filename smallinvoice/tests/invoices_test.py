@@ -13,7 +13,8 @@ def test_invoices():
 def test_invoice_details():
     client = Client(TEST_API_TOKEN)
     details = client.invoices.details(25676)
-    assert details["totalamount"] == "1440"
+    print details
+    assert details["totalamount"] == 1440
 
 
 def test_invoice_pdf():
@@ -72,12 +73,19 @@ def test_status_invoice():
     s = State(status=State.REMINDER)
     client = Client(TEST_API_TOKEN)
     client.invoices.status(25676, status=s)
-    assert client.invoices.details(25676)["status"] == "3"
+    assert client.invoices.details(25676)["status"] == 3
 
 
 def test_invoice_payment():
-    p = Payment(amount=1, date="2013-01-03", type=1)
-    print p
     client = Client(TEST_API_TOKEN)
-    client.invoices.payment(51090, p)
-    assert client.invoices.details(51090)["date"] == "2013-01-03"
+    p = Position(type=1, number=2, name="Basisbeitrag", description="Test",
+                 cost=6000, unit=3, amount=1)
+    i = Invoice(client_id=24401, client_address_id=24461, currency="CHF",
+                date="2013-01-03", due="2013-01-24", language="de",
+                positions=[p])
+
+    invoice_id = client.invoices.add(i)
+    payment = Payment(amount=6000, date="2014-01-03", type=1)
+
+    client.invoices.payment(invoice_id, payment)
+    assert client.invoices.details(invoice_id)["date"] == "2013-01-03"
