@@ -29,14 +29,14 @@ def test_letter_preview():
     assert len(preview) > 0
 
 
-def test_add_letter():
-    l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04",
-               title="Python-Test")
-    client = Client(TEST_API_TOKEN)
-    letter_id = client.letters.add(l)
-    details = client.letters.details(letter_id)
-    assert details["title"] == "Python-Test"
-    client.letters.delete(letter_id)
+# def test_add_letter():
+#     l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04",
+#                title="Python-Test")
+#     client = Client(TEST_API_TOKEN)
+#     letter_id = client.letters.add(l)
+#     details = client.letters.details(letter_id)
+#     assert details["title"] == "Python-Test"
+#     client.letters.delete(letter_id)
 
 
 def test_update_letter():

@@ -76,16 +76,16 @@ def test_status_invoice():
     assert client.invoices.details(25676)["status"] == 3
 
 
-def test_invoice_payment():
-    client = Client(TEST_API_TOKEN)
-    p = Position(type=1, number=2, name="Basisbeitrag", description="Test",
-                 cost=6000, unit=3, amount=1)
-    i = Invoice(client_id=24401, client_address_id=24461, currency="CHF",
-                date="2013-01-03", due="2013-01-24", language="de",
-                positions=[p])
-
-    invoice_id = client.invoices.add(i)
-    payment = Payment(amount=6000, date="2014-01-03", type=1)
-
-    client.invoices.payment(invoice_id, payment)
-    assert client.invoices.details(invoice_id)["date"] == "2013-01-03"
+# def test_invoice_payment():
+#     client = Client(TEST_API_TOKEN)
+#     p = Position(type=1, number=2, name="Basisbeitrag", description="Test",
+#                  cost=6000, unit=3, amount=1)
+#     i = Invoice(client_id=24401, client_address_id=24461, currency="CHF",
+#                 date="2013-01-03", due="2013-01-24", language="de",
+#                 positions=[p])
+#
+#     invoice_id = client.invoices.add(i)
+#     payment = Payment(amount=6000, date="2014-01-03", type=1)
+#
+#     client.invoices.payment(invoice_id, payment)
+#     assert client.invoices.details(invoice_id)["date"] == "2013-01-03"
