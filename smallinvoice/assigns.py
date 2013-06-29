@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
 assign_list = "assign/list"
@@ -8,8 +9,8 @@ update_assign = "assign/edit/id/%s"
 
 
 class Assign(BaseJsonEncodableObject):
-    def __init__(self, type, type_id, hours, date):
-        self.type = type
+    def __init__(self, assign_type, type_id, hours, date):
+        self.type = assign_type
         self.type_id = type_id
         self.hours = hours
         self.date = date

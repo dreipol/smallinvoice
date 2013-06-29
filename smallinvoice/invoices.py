@@ -1,4 +1,5 @@
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
+# coding=utf-8
+from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject, ObjectWithPositions
 
 invoice_list = "invoice/list"
 invoice_details = "invoice/get/id/%s"
@@ -9,59 +10,30 @@ delete_invoice = "invoice/delete/id/%s"
 update_invoice = "invoice/edit/id/%s"
 email_invoice = "invoice/email/id/%s"
 status_invoice = "invoice/status/id/%s"
-invoice_payment = "invoice/payment/is/%s"
+invoice_payment = "invoice/payment/id/%s"
 
 
-class Position(BaseJsonEncodableObject):
-    def __init__(self, type, number, description, cost, unit, amount, name="",
-                 discount=None, vat=0):
-        self.type = type
-        self.number = number
-        self.name = name
-        self.description = description
-        self.cost = cost
-        self.unit = unit
-        self.amount = amount
-        self.discount = discount
-        self.vat = vat
-
-
-class Invoice(BaseJsonEncodableObject):
+class Invoice(ObjectWithPositions):
     def __init__(self, client_id, client_address_id, currency, date, due,
-                 language, positions):
+                 language):
         self.client_id = client_id
         self.client_address_id = client_address_id
         self.currency = currency
         self.date = date
         self.due = due
         self.language = language
-        self.positions = positions
+        self.positions = []
 
-
-class Recipient(BaseJsonEncodableObject):
-    def __init__(self, cc, email, name):
-        self.cc = cc
-        self.email = email
-        self.name = name
-
-
-class Mail(BaseJsonEncodableObject):
-    def __init__(self, subject, body, sendstatus, afterstatus, recipients):
-        self.subject = subject
-        self.body = body
-        self.sendstatus = sendstatus
-        self.afterstatus = afterstatus
-        self.recipients = recipients
 
 
 class Payment(BaseJsonEncodableObject):
-    def __init__(self, amount, date, type):
+    def __init__(self, amount, date, payment_type):
         self.amount = amount
         self.date = date
-        self.type = type
+        self.type = payment_type
 
 
-class State(BaseJsonEncodableObject):
+class InvoiceState(BaseJsonEncodableObject):
     DRAFT = 0
     SENT = 1
     PAID = 2

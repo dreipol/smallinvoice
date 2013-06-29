@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
 letter_list = "letter/list"
@@ -19,23 +20,7 @@ class Letter(BaseJsonEncodableObject):
         self.title = title
 
 
-class Recipient(BaseJsonEncodableObject):
-    def __init__(self, cc, email, name):
-        self.cc = cc
-        self.email = email
-        self.name = name
-
-
-class Mail(BaseJsonEncodableObject):
-    def __init__(self, subject, body, sendstatus, afterstatus, recipients):
-        self.subject = subject
-        self.body = body
-        self.sendstatus = sendstatus
-        self.afterstatus = afterstatus
-        self.recipients = recipients
-
-
-class State(BaseJsonEncodableObject):
+class LetterState(BaseJsonEncodableObject):
     DRAFT = 7
     SENT = 1
 

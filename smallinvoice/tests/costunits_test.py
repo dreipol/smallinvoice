@@ -1,23 +1,21 @@
-from smallinvoice.client import *
-from smallinvoice.costunits import *
-from smallinvoice.tests import TEST_API_TOKEN
+# coding=utf-8
+from smallinvoice.costunits import Costunit
+from smallinvoice.tests import get_client
 
 
 def test_get_all_costunits():
-    client = Client(TEST_API_TOKEN)
-    result = client.costunits.all()
+    result = get_client().costunits.all()
     assert len(result) > 0
 
 
 def test_costunits_details():
-    client = Client(TEST_API_TOKEN)
-    details = client.costunits.details(234)
+    details = get_client().costunits.details(234)
     assert details["name"] == "Kostenstellentest"
 
 
 def test_add_costunit():
     c = Costunit(name="Testunit", status=1)
-    client = Client(TEST_API_TOKEN)
+    client = get_client()
     costunit_id = client.costunits.add(c)
     details = client.costunits.details(costunit_id)
     assert details["name"] == "Testunit"
@@ -27,7 +25,7 @@ def test_add_costunit():
 def test_update_costunit():
     c = Costunit(name="Kostenstellentest", status=1)
     c.id = 234
-    client = Client(TEST_API_TOKEN)
+    client = get_client()
     client.costunits.update(c.id, c)
     details = client.costunits.details(c.id)
     assert details["name"] == "Kostenstellentest"

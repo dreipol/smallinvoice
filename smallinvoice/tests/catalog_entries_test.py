@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice.client import *
 from smallinvoice.catalog import *
 from smallinvoice.tests import TEST_API_TOKEN
@@ -16,7 +17,7 @@ def test_catalog_entry_details():
 
 
 def test_add_catalog():
-    c = Catalog(type=1, unit=2, name="Add_Test", cost_per_unit=50)
+    c = Catalog(catalog_type=1, unit=2, name="Add_Test", cost_per_unit=50)
     client = Client(TEST_API_TOKEN)
     catalog_id = client.catalog.add(c)
     details = client.catalog.details(catalog_id)
@@ -25,7 +26,7 @@ def test_add_catalog():
 
 
 def test_update_catalog():
-    c = Catalog(type=1, unit=2, name="Update", cost_per_unit=50)
+    c = Catalog(catalog_type=1, unit=2, name="Update", cost_per_unit=50)
     c.id = 178187
     client = Client(TEST_API_TOKEN)
     client.catalog.update(c.id, c)

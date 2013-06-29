@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
 
 time_list = "time/list"

@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice import BaseJsonEncodableObject, REQUEST_METHOD
 
 account_list = 'account/list'

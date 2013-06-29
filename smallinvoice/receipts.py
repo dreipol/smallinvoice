@@ -1,4 +1,5 @@
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
+# coding=utf-8
+from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject, ObjectWithPositions
 
 receipt_list = "receipt/list"
 receipt_details = "receipt/get/id/%s"
@@ -11,48 +12,18 @@ email_receipt = "receipt/email/id/%s"
 status_receipt = "receipt/status/id/%s"
 
 
-class Position(BaseJsonEncodableObject):
-    def __init__(self, type, number, description, cost, unit, amount, name="",
-                 discount=None, vat=0):
-        self.type = type
-        self.number = number
-        self.name = name
-        self.description = description
-        self.cost = cost
-        self.unit = unit
-        self.amount = amount
-        self.discount = discount
-        self.vat = vat
-
-
-class Receipt(BaseJsonEncodableObject):
-    def __init__(self, client_id, client_address_id, currency, date, language,
-                 positions):
+class Receipt(ObjectWithPositions):
+    def __init__(self, client_id, client_address_id, currency, date, language):
         self.client_id = client_id
         self.client_address_id = client_address_id
         self.currency = currency
         self.date = date
         self.language = language
-        self.positions = positions
+        self.positions = []
 
 
-class Recipient(BaseJsonEncodableObject):
-    def __init__(self, cc, email, name):
-        self.cc = cc
-        self.email = email
-        self.name = name
 
-
-class Mail(BaseJsonEncodableObject):
-    def __init__(self, subject, body, sendstatus, afterstatus, recipients):
-        self.subject = subject
-        self.body = body
-        self.sendstatus = sendstatus
-        self.afterstatus = afterstatus
-        self.recipients = recipients
-
-
-class State(BaseJsonEncodableObject):
+class ReceiptState(BaseJsonEncodableObject):
     DRAFT = 0
     SENT = 1
     PAID = 10

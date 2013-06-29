@@ -1,3 +1,4 @@
+# coding=utf-8
 from smallinvoice import BaseJsonEncodableObject, REQUEST_METHOD
 
 all_clients = "client/list"
@@ -19,23 +20,26 @@ class Address(BaseJsonEncodableObject):
         self.country = country
 
 
-class CUSTOMER_TYPE():
+class CUSTOMER_TYPE(object):
     COMPANY = 1
     PRIVATE = 2
 
 
-class CUSTOMER_GENDER():
+class CUSTOMER_GENDER(object):
     MALE = 1
     FEMALE = 2
 
 
 class Customer(BaseJsonEncodableObject):
-    def __init__(self, type, gender, name, language, addresses):
-        self.type = type
+    def __init__(self, address_type, gender, name, language):
+        self.type = address_type
         self.gender = gender
         self.name = name
         self.language = language
-        self.addresses = addresses
+        self.addresses = []
+
+    def add_address(self, address):
+        self.append_to('addresses', address)
 
 
 class CustomerClient(object):

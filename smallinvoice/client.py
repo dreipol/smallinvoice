@@ -1,4 +1,5 @@
-from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, BaseJsonEncodableObject, REQUEST_METHOD
+# coding=utf-8
+from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, REQUEST_METHOD
 from smallinvoice.accounts import AccountClient
 from smallinvoice.assigns import AssignClient
 from smallinvoice.catalog import CatalogClient
@@ -55,8 +56,8 @@ class Client(object):
         """
         url = self.append_token_to_method(method)
         if data:
-            print data.encode()
-            result = requests.post(url, data={"data": data.encode()},
+            result = requests.post(url,
+                                   data={ "data" : data.encode()},
                                    verify=False)
         else:
             if request_method == REQUEST_METHOD.POST:

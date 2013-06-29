@@ -1,10 +1,4 @@
-from smallinvoice.customers import Address, Customer, CUSTOMER_TYPE, CUSTOMER_GENDER
-from smallinvoice.invoices import Position, Invoice
-from smallinvoice.tests import TEST_API_TOKEN
-
-__author__ = 'phil'
-from smallinvoice import PREVIEW_SIZE
-
+# coding=utf-8
 from smallinvoice.client import Client, SmallInvoiceConfigurationException, SmallInvoiceConnectionException
 
 
@@ -33,5 +27,5 @@ def test_authentication_error():
     try:
         client.invoices.all()
         assert False
-    except SmallInvoiceConnectionException, e:
+    except SmallInvoiceConnectionException:
         assert True

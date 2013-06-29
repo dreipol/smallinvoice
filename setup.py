@@ -1,8 +1,9 @@
+# coding=utf-8
 from distutils.core import setup
 
 setup(
     name='smallinvoice',
-    version='0.1.3',
+    version='0.2.0',
     author='dreipol GmbH: Philipp Laeubli, Etienne Wild',
     author_email='dev@dreipol.ch',
     packages=['smallinvoice', 'smallinvoice.tests'],
