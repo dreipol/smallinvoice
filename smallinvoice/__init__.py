@@ -131,7 +131,7 @@ class ObjectWithPositions(BaseJsonEncodableObject):
         self.append_to('positions', position)
 
 
-class Client(object):
+class SmallinvoiceService(object):
     """ A simple client wrapper for the smallinvoice.ch web service api"""
     country_code = None
     api_token = None

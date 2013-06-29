@@ -1,11 +1,11 @@
 # coding=utf-8
 import os
-from smallinvoice import Client
+from smallinvoice import SmallinvoiceService
 
 TEST_API_TOKEN = os.environ['TEST_API_TOKEN']
 
 def get_client():
-    return Client(TEST_API_TOKEN)
+    return SmallinvoiceService(TEST_API_TOKEN)
 
 
 def generate_address():
