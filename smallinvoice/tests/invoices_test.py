@@ -83,7 +83,7 @@ def test_email_invoice():
 def test_status_invoice():
     s = InvoiceState(status=InvoiceState.REMINDER)
     client = get_client()
-    client.invoices.status(25676, status=s)
+    client.invoices.status(25676, data=s)
     assert client.invoices.details(25676)["status"] == 3
 
 

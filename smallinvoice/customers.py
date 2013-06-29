@@ -1,12 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, REQUEST_METHOD
-
-all_clients = "client/list"
-client_details = "client/get/id/%s"
-add_client = "client/add"
-delete_client = "client/delete/id/%s"
-update_client = "client/edit/id/%s"
-
+from smallinvoice import BaseJsonEncodableObject, BaseService
 
 class Address(BaseJsonEncodableObject):
     def __init__(self, primary, street, streetno, city, code, country,
@@ -42,26 +35,5 @@ class Customer(BaseJsonEncodableObject):
         self.append_to('addresses', address)
 
 
-class CustomerClient(object):
-    def __init__(self, client):
-        self.client = client
-
-    def all(self):
-        """ returns all Clients """
-        return self.client.request_with_method(all_clients)["items"]
-
-    def details(self, client_id):
-        """ returns the details to a specific client """
-        return self.client.request_with_method(client_details % (client_id,))[
-            "item"]
-
-    def add(self, client):
-        return self.client.request_with_method(add_client, data=client)["id"]
-
-    def delete(self, client_id):
-        return self.client.request_with_method(delete_client % (client_id,),
-                                               request_method=REQUEST_METHOD.POST)
-
-    def update(self, client_id, client):
-        return self.client.request_with_method(update_client % (client_id,),
-                                               data=client)
+class CustomerService(BaseService):
+    name = 'client'

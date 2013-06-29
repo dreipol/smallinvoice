@@ -70,5 +70,5 @@ def test_email_offer():
 def test_status_invoice():
     s = OfferState(status=OfferState.OK)
     client = get_client()
-    client.offers.status(26193, status=s)
+    client.offers.status(26193, data=s)
     assert client.offers.details(26193)["status"] == 9

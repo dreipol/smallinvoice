@@ -1,11 +1,5 @@
 # coding=utf-8
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject
-
-all_cataloge_entries = "catalog/list"
-catalog_entry_details = "catalog/get/id/%s"
-add_catalog = "catalog/add"
-delete_catalog = "catalog/delete/id/%s"
-update_catalog = "catalog/edit/id/%s"
+from smallinvoice import BaseJsonEncodableObject, BaseService
 
 
 class Catalog(BaseJsonEncodableObject):
@@ -17,24 +11,5 @@ class Catalog(BaseJsonEncodableObject):
         self.vat = vat
 
 
-class CatalogClient(object):
-    def __init__(self, client):
-        self.client = client
-
-
-    def all(self):
-        """ returns all Catalog entries """
-        return self.client.request_with_method(all_cataloge_entries)["items"]
-
-    def details(self, catalog_id):
-        """ returns the details to a specific catalog entry """
-        return self.client.request_with_method(catalog_entry_details % (catalog_id,))["item"]
-
-    def add(self, client):
-        return self.client.request_with_method(add_catalog, data=client)["id"]
-
-    def delete(self, catalog_id):
-        return self.client.request_with_method(delete_catalog % (catalog_id,), request_method=REQUEST_METHOD.POST)
-
-    def update(self, catalog_id, catalog):
-        return self.client.request_with_method(update_catalog % (catalog_id,), data=catalog)
+class CatalogService(BaseService):
+    name = 'catalog'

@@ -1,16 +1,5 @@
 # coding=utf-8
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject, ObjectWithPositions
-
-invoice_list = "invoice/list"
-invoice_details = "invoice/get/id/%s"
-invoice_pdf = "invoice/pdf/id/%s"
-invoice_preview = "invoice/preview/id/%s/page/%s/size/%s"
-add_invoice = "invoice/add"
-delete_invoice = "invoice/delete/id/%s"
-update_invoice = "invoice/edit/id/%s"
-email_invoice = "invoice/email/id/%s"
-status_invoice = "invoice/status/id/%s"
-invoice_payment = "invoice/payment/id/%s"
+from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService
 
 
 class Invoice(ObjectWithPositions):
@@ -43,54 +32,9 @@ class InvoiceState(BaseJsonEncodableObject):
         self.status = status
 
 
-class InvoiceClient(object):
-    """ This class wraps all invoice related api
-    """
-
-    def __init__(self, client):
-        """ the InvoiceClient is only a wrapper of the real client, which must be passed in here"""
-        self.client = client
-
-    def all(self):
-        """ returns all invoices"""
-        return self.client.request_with_method(invoice_list)["items"]
-
-    def details(self, invoice_id):
-        """ returns the details to a specific invoice """
-        return self.client.request_with_method(invoice_details % (invoice_id,))[
-            "item"]
-
-    def pdf(self, invoice_id):
-        """ returns the pdf from the invoice as binary data """
-        return self.client.request_with_method(invoice_pdf % (invoice_id,))
-
-    def preview(self, invoice_id, page_number, size):
-        """ returns a preview from the invoice and the page with the specified size as binary data """
-        return self.client.request_with_method(
-            invoice_preview % (invoice_id, page_number, size,))
-
-    def add(self, client):
-        """ returns the id of the new created invoice """
-        return self.client.request_with_method(add_invoice, data=client)["id"]
-
-    def delete(self, invoice_id):
-        """ returns an error if the invoice couldn't be deleted """
-        return self.client.request_with_method(delete_invoice % (invoice_id,),
-                                               request_method=REQUEST_METHOD.POST)
-
-    def update(self, invoice_id, invoice):
-        """ returns an error if the invoice couldn't be updated """
-        return self.client.request_with_method(update_invoice % (invoice_id,),
-                                               data=invoice)
-
-    def email(self, invoice_id, invoice):
-        return self.client.request_with_method(email_invoice % (invoice_id,),
-                                               data=invoice)
-
-    def status(self, invoice_id, status):
-        return self.client.request_with_method(status_invoice % (invoice_id,),
-                                               data=status)
+class InvoiceService(BaseService):
+    name = 'invoice'
 
     def payment(self, invoice_id, payment):
-        return self.client.request_with_method(invoice_payment % (invoice_id,),
+        return self.client.request_with_method('invoice/payment/id/%s' % (invoice_id,),
                                                data=payment)

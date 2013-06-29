@@ -1,11 +1,13 @@
 # coding=utf-8
 from smallinvoice import BaseJsonEncodableObject
 
+
 class Recipient(BaseJsonEncodableObject):
     def __init__(self, cc, email, name):
         self.cc = cc
         self.email = email
         self.name = name
+
 
 class Mail(BaseJsonEncodableObject):
     def __init__(self, subject, body, sendstatus, afterstatus):

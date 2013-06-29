@@ -1,18 +1,18 @@
 # coding=utf-8
 from smallinvoice import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, REQUEST_METHOD
-from smallinvoice.accounts import AccountClient
-from smallinvoice.assigns import AssignClient
-from smallinvoice.catalog import CatalogClient
-from smallinvoice.costunits import CostunitClient
-from smallinvoice.customers import CustomerClient
-from smallinvoice.letters import LetterClient
-from smallinvoice.offers import OfferClient
-from smallinvoice.projects import ProjectClient
-from smallinvoice.receipts import ReceiptClient
-from smallinvoice.time import TimeClient
+from smallinvoice.accounts import AccountService
+from smallinvoice.assigns import AssignService
+from smallinvoice.catalog import CatalogService
+from smallinvoice.costunits import CostUnitService
+from smallinvoice.customers import CustomerService
+from smallinvoice.letters import LetterService
+from smallinvoice.offers import OfferService
+from smallinvoice.projects import ProjectService
+from smallinvoice.receipts import ReceiptService
+from smallinvoice.time import TimeService
 import requests
 import json
-from invoices import InvoiceClient
+from invoices import InvoiceService
 
 
 class Client(object):
@@ -28,17 +28,17 @@ class Client(object):
             raise SmallInvoiceConfigurationException(self)
         self.api_token = api_token
 
-        self.invoices = InvoiceClient(self)
-        self.clients = CustomerClient(self)
-        self.offers = OfferClient(self)
-        self.receipts = ReceiptClient(self)
-        self.letters = LetterClient(self)
-        self.catalog = CatalogClient(self)
-        self.projects = ProjectClient(self)
-        self.costunits = CostunitClient(self)
-        self.assigns = AssignClient(self)
-        self.times = TimeClient(self)
-        self.accounts = AccountClient(self)
+        self.invoices = InvoiceService(self)
+        self.clients = CustomerService(self)
+        self.offers = OfferService(self)
+        self.receipts = ReceiptService(self)
+        self.letters = LetterService(self)
+        self.catalog = CatalogService(self)
+        self.projects = ProjectService(self)
+        self.costunits = CostUnitService(self)
+        self.assigns = AssignService(self)
+        self.times = TimeService(self)
+        self.accounts = AccountService(self)
 
     def get_api_endpoint(self):
         """ returns the api end-point,respectively the url """

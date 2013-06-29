@@ -75,5 +75,5 @@ def test_email_receipt():
 def test_status_receipt():
     s = ReceiptState(status=ReceiptState.PAID)
     client = get_client()
-    client.receipts.status(44714, status=s)
+    client.receipts.status(44714, data=s)
     assert client.receipts.details(44714)["status"] == 10

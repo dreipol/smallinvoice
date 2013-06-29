@@ -60,5 +60,5 @@ def test_email_letter():
 def test_status_letter():
     s = LetterState(status=LetterState.DRAFT)
     client = get_client()
-    client.letters.status(32497, status=s)
+    client.letters.status(32497, data=s)
     assert client.letters.details(32497)["status"] == 7

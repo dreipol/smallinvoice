@@ -1,11 +1,7 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, REQUEST_METHOD
+from smallinvoice import BaseJsonEncodableObject, BaseService, Methods
 
-account_list = 'account/list'
-add_account = "account/add"
-account_details = 'account/get/id/%s'
-update_account= 'account/edit/id/%s'
-delete_account = "account/delete/id/%s"
+
 class Account(BaseJsonEncodableObject):
 
     def __init__(self, title, institute, number, iban, swiftbic, clearing, postaccount,lsv,dd,esr):
@@ -21,24 +17,12 @@ class Account(BaseJsonEncodableObject):
         self.esr = esr
 
 
-class AccountClient(object):
+class AccountService(BaseService):
+    name = 'account'
 
-    def __init__(self, client):
-        self.client = client
-
-    def all(self):
-        return self.client.request_with_method(account_list)['items']
-
-    def details(self, client_id):
-        return self.client.request_with_method(account_details % (client_id,))
-
-    def add(self, account):
-        return self.client.request_with_method(add_account, data=account)["id"]
-
-    def delete(self, account_id):
-        return self.client.request_with_method(delete_account % (account_id,),
-                                               request_method=REQUEST_METHOD.POST)
-
-    def update(self, account_id, account):
-        return self.client.request_with_method(update_account % (account_id,),
-                                               data=account)
+    def details(self, identifier):
+        """
+        this webserice does not return the default dictionary containing the data in the item key, instead it
+        returns the data directly.
+        """
+        return self.client.request_with_method(Methods.GET % (self.name, identifier,))

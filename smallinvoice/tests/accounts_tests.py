@@ -36,6 +36,7 @@ def test_get_accounts_details():
     a = generate_account()
     account_id = client.accounts.add(a)
     details = client.accounts.details(account_id)
+    print details
     assert details['institute'] == 'Familie Test'
     client.accounts.delete(account_id)
 

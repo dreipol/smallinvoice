@@ -1,7 +1,5 @@
 # coding=utf-8
 import json, collections
-__author__ = 'phil'
-
 
 class PREVIEW_SIZE(object):
     SMALL = 240
@@ -41,6 +39,60 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
         status_code, remote_message)
         super(SmallInvoiceException, self).__init__(message)
 
+
+
+class Methods(object):
+    LIST = "%s/list"
+    GET = "%s/get/id/%s"
+    ADD = "%s/add"
+    DELETE = "%s/delete/id/%s"
+    UPDATE = "%s/edit/id/%s"
+    PDF = "%s/pdf/id/%s"
+    PREVIEW = "%s/preview/id/%s/page/%s/size/%s"
+    EMAIL = "%s/email/id/%s"
+    STATUS = "%s/status/id/%s"
+
+
+
+class BaseService(object):
+    name = 'BASE_SERVICE'
+
+    def __init__(self, client):
+        self.client = client
+
+    def all(self):
+        return self.client.request_with_method(Methods.LIST % self.name)['items']
+
+    def details(self, identifier):
+        return self.client.request_with_method(Methods.GET % (self.name, identifier,))['item']
+
+    def add(self, data):
+        return self.client.request_with_method(Methods.ADD % self.name, data=data)["id"]
+
+    def delete(self, identifier):
+        return self.client.request_with_method(Methods.DELETE % (self.name, identifier,),
+                                               request_method=REQUEST_METHOD.POST)
+
+    def update(self, identifier, data):
+        return self.client.request_with_method(Methods.UPDATE % (self.name, identifier,),
+                                               data=data)
+
+    def pdf(self, identifier):
+        """ returns the pdf from the object as binary data """
+        return self.client.request_with_method(Methods.PDF % (self.name, identifier,))
+
+    def preview(self, identifier, page_number, size):
+        """ returns a preview from the object and the page with the specified size as binary data """
+        return self.client.request_with_method(
+            Methods.PREVIEW% (self.name, identifier, page_number, size,))
+
+    def email(self, identifier, data):
+        return self.client.request_with_method(Methods.EMAIL % (self.name, identifier,),
+                                                   data=data)
+
+    def status(self, identifier, data):
+        return self.client.request_with_method(Methods.STATUS % (self.name, identifier,),
+                                               data=data)
 
 class BaseJsonEncodableObject(object):
 

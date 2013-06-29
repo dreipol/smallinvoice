@@ -1,16 +1,5 @@
 # coding=utf-8
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject, ObjectWithPositions
-
-receipt_list = "receipt/list"
-receipt_details = "receipt/get/id/%s"
-receipt_pdf = "receipt/pdf/id/%s"
-receipt_preview = "receipt/preview/id/%s/page/%s/size/%s"
-add_receipt = "receipt/add"
-delete_receipt = "receipt/delete/id/%s"
-update_receipt = "receipt/edit/id/%s"
-email_receipt = "receipt/email/id/%s"
-status_receipt = "receipt/status/id/%s"
-
+from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService
 
 class Receipt(ObjectWithPositions):
     def __init__(self, client_id, client_address_id, currency, date, language):
@@ -22,7 +11,6 @@ class Receipt(ObjectWithPositions):
         self.positions = []
 
 
-
 class ReceiptState(BaseJsonEncodableObject):
     DRAFT = 0
     SENT = 1
@@ -32,47 +20,5 @@ class ReceiptState(BaseJsonEncodableObject):
         self.status = status
 
 
-class ReceiptClient(object):
-    """ This class wraps all receipt related api
-    """
-
-    def __init__(self, client):
-        """ the ReceiptClient is only a wrapper of the real client, which must be passed in here"""
-        self.client = client
-
-    def all(self):
-        """ returns all receipts"""
-        return self.client.request_with_method(receipt_list)["items"]
-
-    def details(self, receipt_id):
-        """ returns the details to a specific receipt """
-        return self.client.request_with_method(receipt_details % (receipt_id,))[
-            "item"]
-
-    def pdf(self, receipt_id):
-        """ returns the pdf from the receipt as binary data """
-        return self.client.request_with_method(receipt_pdf % (receipt_id,))
-
-    def preview(self, receipt_id, page_number, size):
-        """ returns a preview from the receipt and the page with the specified size as binary data """
-        return self.client.request_with_method(
-            receipt_preview % (receipt_id, page_number, size,))
-
-    def add(self, client):
-        return self.client.request_with_method(add_receipt, data=client)["id"]
-
-    def delete(self, receipt_id):
-        return self.client.request_with_method(delete_receipt % (receipt_id,),
-                                               request_method=REQUEST_METHOD.POST)
-
-    def update(self, receipt_id, receipt):
-        return self.client.request_with_method(update_receipt % (receipt_id,),
-                                               data=receipt)
-
-    def email(self, receipt_id, receipt):
-        return self.client.request_with_method(email_receipt % (receipt_id,),
-                                               data=receipt)
-
-    def status(self, receipt_id, status):
-        return self.client.request_with_method(status_receipt % (receipt_id,),
-                                               data=status)
+class ReceiptService(BaseService):
+    name = 'receipt'

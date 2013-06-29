@@ -9,13 +9,11 @@ def generate_assign(date="2013-02-03"):
 
 def test_get_all_assigns():
     result = get_client().assigns.all()
-    print result
     assert len(result) > 0
 
 
 def test_assigns_details():
     details = get_client().assigns.details(12542)
-    print(details)
     assert details["employee"] == "Andreas Graf"
 
 
