@@ -35,5 +35,5 @@ class Customer(BaseJsonEncodableObject):
         self.append_to('addresses', address)
 
 
-class CustomerService(BaseService):
+class ClientService(BaseService):
     name = 'client'

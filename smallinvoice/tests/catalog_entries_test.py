@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice.client import *
+from smallinvoice.clients import *
 from smallinvoice.catalog import *
 from smallinvoice.tests import TEST_API_TOKEN
 

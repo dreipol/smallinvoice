@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice.client import Client, SmallInvoiceConfigurationException, SmallInvoiceConnectionException
+from smallinvoice.clients import Client, SmallInvoiceConfigurationException, SmallInvoiceConnectionException
 
 
 def client_configuration_no_token_test():

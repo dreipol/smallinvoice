@@ -1,5 +1,4 @@
 # coding=utf-8
-from smallinvoice.customers import Address, Customer, CUSTOMER_TYPE, CUSTOMER_GENDER
 from smallinvoice.tests import  get_client, generate_customer, generate_address
 
 
