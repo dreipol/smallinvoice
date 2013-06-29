@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import REQUEST_METHOD, BaseJsonEncodableObject, BaseService
+from smallinvoice import BaseJsonEncodableObject, BaseService
 
 
 class Project(BaseJsonEncodableObject):

@@ -133,7 +133,6 @@ class ObjectWithPositions(BaseJsonEncodableObject):
 
 class SmallinvoiceService(object):
     """ A simple client wrapper for the smallinvoice.ch web service api"""
-    country_code = None
     api_token = None
 
     def __init__(self, api_token):
