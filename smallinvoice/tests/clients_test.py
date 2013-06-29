@@ -12,7 +12,6 @@ def test_client_details():
     assert details["addition"] == "Andreas Graf"
 
 
-
 def test_add_address():
     c = generate_customer()
     c.add_address(generate_address())

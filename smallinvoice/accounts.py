@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService, Methods
+from smallinvoice import BaseJsonEncodableObject, BaseService, Methods, SmallinvoiceService
 
 
 class Account(BaseJsonEncodableObject):
@@ -26,3 +26,5 @@ class AccountService(BaseService):
         returns the data directly.
         """
         return self.client.request_with_method(Methods.GET % (self.name, identifier,))
+
+SmallinvoiceService.register(AccountService)

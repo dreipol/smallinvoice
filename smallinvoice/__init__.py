@@ -134,7 +134,7 @@ class ObjectWithPositions(BaseJsonEncodableObject):
 class SmallinvoiceService(object):
     """ A simple client wrapper for the smallinvoice.ch web service api"""
     api_token = None
-
+    services = {}
     def __init__(self, api_token):
         """initializes the object, requires the country code and a valid api_token"""
 
@@ -143,29 +143,16 @@ class SmallinvoiceService(object):
             raise SmallInvoiceConfigurationException(self)
         self.api_token = api_token
 
-        from accounts import AccountService
-        from assigns import AssignService
-        from catalog import CatalogService
-        from costunits import CostUnitService
-        from clients import ClientService
-        from letters import LetterService
-        from offers import OfferService
-        from projects import ProjectService
-        from receipts import ReceiptService
-        from time import TimeService
-        from invoices import InvoiceService
+        for service_name, service_class in self.services.iteritems():
+            setattr(self, '%ss' % service_name, service_class(self))
 
-        self.invoices = InvoiceService(self)
-        self.clients = ClientService(self)
-        self.offers = OfferService(self)
-        self.receipts = ReceiptService(self)
-        self.letters = LetterService(self)
-        self.catalog = CatalogService(self)
-        self.projects = ProjectService(self)
-        self.costunits = CostUnitService(self)
-        self.assigns = AssignService(self)
-        self.times = TimeService(self)
-        self.accounts = AccountService(self)
+
+
+
+    @classmethod
+    def register(self, service):
+        self.services[service.name] = service
+
 
     def get_api_endpoint(self):
         """ returns the api end-point,respectively the url """

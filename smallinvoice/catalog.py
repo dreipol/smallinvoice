@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService
+from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
 
 
 class Catalog(BaseJsonEncodableObject):
@@ -13,3 +13,5 @@ class Catalog(BaseJsonEncodableObject):
 
 class CatalogService(BaseService):
     name = 'catalog'
+
+SmallinvoiceService.register(CatalogService)

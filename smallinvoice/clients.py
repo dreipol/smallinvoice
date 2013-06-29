@@ -1,5 +1,6 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService
+from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
+
 
 class Address(BaseJsonEncodableObject):
     def __init__(self, primary, street, streetno, city, code, country,
@@ -37,3 +38,6 @@ class Customer(BaseJsonEncodableObject):
 
 class ClientService(BaseService):
     name = 'client'
+
+
+SmallinvoiceService.register(ClientService)

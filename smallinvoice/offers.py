@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService
+from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService, SmallinvoiceService
 
 
 class Offer(ObjectWithPositions):
@@ -27,3 +27,6 @@ class OfferState(BaseJsonEncodableObject):
 
 class OfferService(BaseService):
     name = 'offer'
+
+
+SmallinvoiceService.register(OfferService)

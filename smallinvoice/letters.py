@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService
+from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
 
 
 class Letter(BaseJsonEncodableObject):
@@ -20,3 +20,5 @@ class LetterState(BaseJsonEncodableObject):
 
 class LetterService(BaseService):
     name = 'letter'
+
+SmallinvoiceService.register(LetterService)

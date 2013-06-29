@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService
+from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
 
 
 class Time(BaseJsonEncodableObject):
@@ -12,3 +12,6 @@ class Time(BaseJsonEncodableObject):
 
 class TimeService(BaseService):
     name = 'time'
+
+
+SmallinvoiceService.register(TimeService)

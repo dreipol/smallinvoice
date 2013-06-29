@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService
+from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService, SmallinvoiceService
 
 
 class Invoice(ObjectWithPositions):
@@ -38,3 +38,5 @@ class InvoiceService(BaseService):
     def payment(self, invoice_id, payment):
         return self.client.request_with_method('invoice/payment/id/%s' % (invoice_id,),
                                                data=payment)
+
+SmallinvoiceService.register(InvoiceService)

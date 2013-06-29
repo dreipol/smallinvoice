@@ -1,5 +1,6 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService
+from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService, SmallinvoiceService
+
 
 class Receipt(ObjectWithPositions):
     def __init__(self, client_id, client_address_id, currency, date, language):
@@ -22,3 +23,5 @@ class ReceiptState(BaseJsonEncodableObject):
 
 class ReceiptService(BaseService):
     name = 'receipt'
+
+SmallinvoiceService.register(ReceiptService)
