@@ -15,7 +15,7 @@ from smallinvoice.receipts import ReceiptService
 from smallinvoice.time import TimeService
 
 
-class SmallinvoiceService(object):
+class Smallinvoice(object):
     """ A simple client wrapper for the smallinvoice.ch web service api"""
     api_token = None
     services = {}
@@ -81,15 +81,15 @@ class SmallinvoiceService(object):
                 return result.content
 
 
-SmallinvoiceService.register(AccountService)
-SmallinvoiceService.register(ClientService)
-SmallinvoiceService.register(AssignService)
-SmallinvoiceService.register(CatalogService)
-SmallinvoiceService.register(CostUnitService)
-SmallinvoiceService.register(InvoiceService)
-SmallinvoiceService.register(LetterService)
-SmallinvoiceService.register(OfferService)
-SmallinvoiceService.register(ProjectService)
-SmallinvoiceService.register(ReceiptService)
-SmallinvoiceService.register(TimeService)
+Smallinvoice.register(AccountService)
+Smallinvoice.register(ClientService)
+Smallinvoice.register(AssignService)
+Smallinvoice.register(CatalogService)
+Smallinvoice.register(CostUnitService)
+Smallinvoice.register(InvoiceService)
+Smallinvoice.register(LetterService)
+Smallinvoice.register(OfferService)
+Smallinvoice.register(ProjectService)
+Smallinvoice.register(ReceiptService)
+Smallinvoice.register(TimeService)
 

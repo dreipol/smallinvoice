@@ -1,12 +1,12 @@
 # coding=utf-8
 import os
-from smallinvoice import SmallinvoiceService
+from smallinvoice import Smallinvoice
 
 TEST_API_TOKEN = os.environ['TEST_API_TOKEN']
 
 
 def get_smallinvoice():
-    return SmallinvoiceService(TEST_API_TOKEN)
+    return Smallinvoice(TEST_API_TOKEN)
 
 
 def generate_address():
