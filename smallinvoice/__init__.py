@@ -68,7 +68,7 @@ class Smallinvoice(object):
             if 'text/html' in content_type or "application/json" in content_type:
                 try:
                     data = json.loads(result.text)
-                    if 'error' in data and data["error"] == True:
+                    if 'error' in data and data["error"] is True:
                         error_code = data['errorcode']
                         error_message = data['errormessage']
                         raise SmallInvoiceConnectionException(error_code,
@@ -92,4 +92,3 @@ Smallinvoice.register(OfferService)
 Smallinvoice.register(ProjectService)
 Smallinvoice.register(ReceiptService)
 Smallinvoice.register(TimeService)
-

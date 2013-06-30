@@ -21,7 +21,7 @@ class SmallInvoiceException(Exception):
 
     def __init__(self, message):
         final_message = "smallinvoice-client exception: %s" % message
-        super(Exception, self).__init__(final_message)
+        super(SmallInvoiceException, self).__init__(final_message)
 
 
 class SmallInvoiceConfigurationException(SmallInvoiceException):
@@ -30,7 +30,7 @@ class SmallInvoiceConfigurationException(SmallInvoiceException):
     def __init__(self, client):
         message = "Wrong configuration.: " \
                   "token: %s" % (client.api_token,)
-        super(SmallInvoiceException, self).__init__(message)
+        super(SmallInvoiceConfigurationException, self).__init__(message)
 
 
 class SmallInvoiceConnectionException(SmallInvoiceException):
@@ -39,7 +39,7 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
     def __init__(self, status_code, remote_message):
         message = "Failed to Connect, Status %s; Message: %s" % (
             status_code, remote_message)
-        super(SmallInvoiceException, self).__init__(message)
+        super(SmallInvoiceConnectionException, self).__init__(message)
 
 
 class Methods(object):
