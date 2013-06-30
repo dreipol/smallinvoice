@@ -1,5 +1,6 @@
 # coding=utf-8
-import json, collections
+import json
+import collections
 
 
 class PREVIEW_SIZE(object):
