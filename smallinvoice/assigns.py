@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
+from smallinvoice.commons import BaseJsonEncodableObject, BaseService
 
 
 class Assign(BaseJsonEncodableObject):
@@ -12,5 +12,3 @@ class Assign(BaseJsonEncodableObject):
 
 class AssignService(BaseService):
     name = 'assign'
-
-SmallinvoiceService.register(AssignService)

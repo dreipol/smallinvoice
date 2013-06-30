@@ -1,27 +1,26 @@
 # coding=utf-8
-from smallinvoice import PREVIEW_SIZE
-from smallinvoice.common import Position, Recipient, Mail
+from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.invoices import Invoice, InvoiceState, Payment
-from smallinvoice.tests import get_client, generate_customer, generate_address
+from smallinvoice.tests import get_smallinvoice, generate_customer, generate_address
 
 
 def test_invoices():
-    invoices = get_client().invoices.all()
+    invoices = get_smallinvoice().invoices.all()
     assert len(invoices) > 0
 
 
 def test_invoice_details():
-    details = get_client().invoices.details(25676)
+    details = get_smallinvoice().invoices.details(25676)
     assert details["totalamount"] == 1440
 
 
 def test_invoice_pdf():
-    pdf = get_client().invoices.pdf(25676)
+    pdf = get_smallinvoice().invoices.pdf(25676)
     assert len(pdf) > 0
 
 
 def test_invoice_preview():
-    preview = get_client().invoices.preview(25676, 1, PREVIEW_SIZE.SMALL)
+    preview = get_smallinvoice().invoices.preview(25676, 1, PREVIEW_SIZE.SMALL)
     assert len(preview) > 0
 
 
@@ -36,7 +35,7 @@ def test_add_invoice():
     customer.clearing = '123123'
     customer.bic = 'BNPAFRPP'
 
-    client = get_client()
+    client = get_smallinvoice()
     client_id = client.clients.add(customer)
     det = client.clients.details(client_id)
     p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
@@ -62,7 +61,7 @@ def test_update_invoice():
                 date="2013-01-03", due="2013-01-24", language="de")
     i.id = 25676
     i.add_position(p)
-    client = get_client()
+    client = get_smallinvoice()
     client.invoices.update(i.id, i)
     details = client.invoices.details(i.id)
     the_position = details["positions"][0]
@@ -75,20 +74,20 @@ def test_email_invoice():
              afterstatus=1)
     m.add_recipient(r)
     m.id = 25676
-    client = get_client()
+    client = get_smallinvoice()
     client.invoices.email(m.id, m)
     assert True
 
 
 def test_status_invoice():
     s = InvoiceState(status=InvoiceState.REMINDER)
-    client = get_client()
+    client = get_smallinvoice()
     client.invoices.status(25676, data=s)
     assert client.invoices.details(25676)["status"] == 3
 
 
 def test_invoice_payment():
-    client = get_client()
+    client = get_smallinvoice()
     p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
                  cost=6000, unit=3, amount=1)
     i = Invoice(client_id=24401, client_address_id=24461, currency="CHF",

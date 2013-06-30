@@ -1,6 +1,6 @@
 # coding=utf-8
 from smallinvoice.accounts import Account
-from smallinvoice.tests import get_client
+from smallinvoice.tests import get_smallinvoice
 
 
 def generate_account():
@@ -16,7 +16,7 @@ def generate_account():
                    esr=1)
 
 def test_list_accounts():
-    client = get_client()
+    client = get_smallinvoice()
     a = generate_account()
     account_id = client.accounts.add(a)
     assert len(client.accounts.all()) > 0
@@ -24,7 +24,7 @@ def test_list_accounts():
 
 
 def test_add_accounts():
-    client = get_client()
+    client = get_smallinvoice()
     a = generate_account()
     account_id = client.accounts.add(a)
     assert account_id
@@ -32,7 +32,7 @@ def test_add_accounts():
 
 
 def test_get_accounts_details():
-    client = get_client()
+    client = get_smallinvoice()
     a = generate_account()
     account_id = client.accounts.add(a)
     details = client.accounts.details(account_id)
@@ -42,7 +42,7 @@ def test_get_accounts_details():
 
 
 def test_delete_account():
-    client = get_client()
+    client = get_smallinvoice()
     amount = len(client.accounts.all())
     a = generate_account()
     a_id = client.accounts.add(a)
@@ -52,7 +52,7 @@ def test_delete_account():
 
 
 def test_account_update():
-    client = get_client()
+    client = get_smallinvoice()
     a = generate_account()
     a_id =client.accounts.add(a)
     a.institute = 'Test Change'

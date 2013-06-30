@@ -4,7 +4,7 @@ from smallinvoice import SmallinvoiceService
 
 TEST_API_TOKEN = os.environ['TEST_API_TOKEN']
 
-def get_client():
+def get_smallinvoice():
     return SmallinvoiceService(TEST_API_TOKEN)
 
 

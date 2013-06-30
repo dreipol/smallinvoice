@@ -1,27 +1,26 @@
 # coding=utf-8
-from smallinvoice import PREVIEW_SIZE
-from smallinvoice.common import Position, Recipient, Mail
+from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.receipts import Receipt, ReceiptState
-from smallinvoice.tests import get_client
+from smallinvoice.tests import get_smallinvoice
 
 
 def test_receipts():
-    result = get_client().receipts.all()
+    result = get_smallinvoice().receipts.all()
     assert len(result) > 0
 
 
 def test_receipt_details():
-    details = get_client().receipts.details(44714)
+    details = get_smallinvoice().receipts.details(44714)
     assert details["totalamount"] == 6000
 
 
 def test_receipt_pdf():
-    pdf = get_client().receipts.pdf(44714)
+    pdf = get_smallinvoice().receipts.pdf(44714)
     assert len(pdf) > 0
 
 
 def test_receipt_preview():
-    preview = get_client().receipts.preview(44714, 1, PREVIEW_SIZE.SMALL)
+    preview = get_smallinvoice().receipts.preview(44714, 1, PREVIEW_SIZE.SMALL)
     assert len(preview) > 0
 
 
@@ -39,7 +38,7 @@ def test_add_receipt():
     p = generate_position()
     r = generate_receipt()
     r.add_position(p)
-    client = get_client()
+    client = get_smallinvoice()
     receipt_id = client.receipts.add(r)
     details = client.receipts.details(receipt_id)
 
@@ -54,7 +53,7 @@ def test_update_receipt():
     r = generate_receipt()
     r.add_position(p)
     r.id = 44714
-    client = get_client()
+    client = get_smallinvoice()
     client.receipts.update(r.id, r)
     details = client.receipts.details(r.id)
     the_position = details["positions"][0]
@@ -67,13 +66,13 @@ def test_email_receipt():
              afterstatus=1)
     m.add_recipient(r)
     m.id = 44714
-    client = get_client()
+    client = get_smallinvoice()
     client.receipts.email(m.id, m)
     assert True
 
 
 def test_status_receipt():
     s = ReceiptState(status=ReceiptState.PAID)
-    client = get_client()
+    client = get_smallinvoice()
     client.receipts.status(44714, data=s)
     assert client.receipts.details(44714)["status"] == 10

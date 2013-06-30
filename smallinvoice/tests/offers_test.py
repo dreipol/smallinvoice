@@ -1,27 +1,26 @@
 # coding=utf-8
-from smallinvoice import PREVIEW_SIZE
-from smallinvoice.common import Position, Recipient, Mail
+from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.offers import Offer, OfferState
-from smallinvoice.tests import get_client
+from smallinvoice.tests import get_smallinvoice
 
 
 def test_offers():
-    result = get_client().offers.all()
+    result = get_smallinvoice().offers.all()
     assert len(result) > 0
 
 
 def test_offer_details():
-    details = get_client().offers.details(26193)
+    details = get_smallinvoice().offers.details(26193)
     assert details["totalamount"] == 1350
 
 
 def test_offer_pdf():
-    pdf = get_client().offers.pdf(26193)
+    pdf = get_smallinvoice().offers.pdf(26193)
     assert len(pdf) > 0
 
 
 def test_offer_preview():
-    preview = get_client().offers.preview(26193, 1, PREVIEW_SIZE.SMALL)
+    preview = get_smallinvoice().offers.preview(26193, 1, PREVIEW_SIZE.SMALL)
     assert len(preview) > 0
 
 
@@ -32,7 +31,7 @@ def test_add_offer():
               date="2013-01-03", due="2013-01-24", language="de")
 
     o.add_position(p)
-    client = get_client()
+    client = get_smallinvoice()
     offer_id = client.offers.add(o)
     details = client.offers.details(offer_id)
 
@@ -49,7 +48,7 @@ def test_update_offer():
               date="2013-01-03", due="2013-01-24", language="de")
     o.add_position(p)
     o.id = 26193
-    client = get_client()
+    client = get_smallinvoice()
     client.offers.update(o.id, o)
     details = client.offers.details(o.id)
     the_position = details["positions"][0]
@@ -62,13 +61,13 @@ def test_email_offer():
              afterstatus=1)
     m.add_recipient(r)
     m.id = 26193
-    client = get_client()
+    client = get_smallinvoice()
     client.offers.email(m.id, m)
     assert True
 
 
 def test_status_invoice():
     s = OfferState(status=OfferState.OK)
-    client = get_client()
+    client = get_smallinvoice()
     client.offers.status(26193, data=s)
     assert client.offers.details(26193)["status"] == 9

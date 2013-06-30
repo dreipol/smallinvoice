@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, BaseService, SmallinvoiceService
+from smallinvoice.commons import BaseJsonEncodableObject, BaseService
 
 
 class Project(BaseJsonEncodableObject):
@@ -10,6 +10,3 @@ class Project(BaseJsonEncodableObject):
 
 class ProjectService(BaseService):
     name = 'project'
-
-
-SmallinvoiceService.register(ProjectService)

@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice import BaseJsonEncodableObject, ObjectWithPositions, BaseService, SmallinvoiceService
+from smallinvoice.commons import ObjectWithPositions, BaseJsonEncodableObject, BaseService
 
 
 class Receipt(ObjectWithPositions):
@@ -23,5 +23,3 @@ class ReceiptState(BaseJsonEncodableObject):
 
 class ReceiptService(BaseService):
     name = 'receipt'
-
-SmallinvoiceService.register(ReceiptService)
