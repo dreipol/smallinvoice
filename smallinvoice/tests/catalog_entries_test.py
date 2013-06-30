@@ -4,7 +4,6 @@ from smallinvoice.tests import get_smallinvoice
 
 
 def test_get_all_catalog_entries():
-
     result = get_smallinvoice().catalogs.all()
     assert len(result) > 0
 

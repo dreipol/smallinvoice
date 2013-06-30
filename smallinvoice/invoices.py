@@ -14,7 +14,6 @@ class Invoice(ObjectWithPositions):
         self.positions = []
 
 
-
 class Payment(BaseJsonEncodableObject):
     def __init__(self, amount, date, payment_type):
         self.amount = amount

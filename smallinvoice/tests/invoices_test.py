@@ -25,7 +25,6 @@ def test_invoice_preview():
 
 
 def test_add_invoice():
-
     customer = generate_customer()
 
     address = generate_address()
@@ -42,7 +41,7 @@ def test_add_invoice():
                  cost=99099, unit=3, amount=1)
     i = Invoice(client_id=client_id, client_address_id=det['main_address_id'], currency="CHF",
                 date="2013-01-03", due="2013-01-24", language="de",
-                )
+    )
     i.add_position(p)
     i.dd = 1
     invoice_id = client.invoices.add(i)
@@ -91,7 +90,7 @@ def test_invoice_payment():
     p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
                  cost=6000, unit=3, amount=1)
     i = Invoice(client_id=24401, client_address_id=24461, currency="CHF",
-                date="2013-01-03", due="2013-08-24", language="de",)
+                date="2013-01-03", due="2013-08-24", language="de", )
 
     i.add_position(p)
     invoice_id = client.invoices.add(i)

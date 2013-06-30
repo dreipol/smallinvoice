@@ -26,12 +26,12 @@ def test_receipt_preview():
 
 def generate_position(description="Test"):
     return Position(position_type=1, number=2, name="Basisbeitrag", description=description,
-                 cost=6000, unit=3, amount=1)
+                    cost=6000, unit=3, amount=1)
 
 
 def generate_receipt():
     return Receipt(client_id=24401, client_address_id=24461, currency="CHF",
-                date="2013-01-03", language="de")
+                   date="2013-01-03", language="de")
 
 
 def test_add_receipt():

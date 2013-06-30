@@ -42,7 +42,7 @@ class SmallinvoiceService(object):
     def append_token_to_method(self, webservice_method):
         """appends the api-token to the webservice method, thus generating a valid url that can be requested. """
         return self.get_api_endpoint() + webservice_method + "/token/%s" % (
-        self.api_token,)
+            self.api_token,)
 
     def request_with_method(self, method, data=None,
                             request_method=REQUEST_METHOD.AUTO):
@@ -51,7 +51,7 @@ class SmallinvoiceService(object):
         url = self.append_token_to_method(method)
         if data:
             result = requests.post(url,
-                                   data={ "data" : data.encode()},
+                                   data={"data": data.encode()},
                                    verify=False)
         else:
             if request_method == REQUEST_METHOD.POST:

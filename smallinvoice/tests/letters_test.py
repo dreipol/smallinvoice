@@ -3,6 +3,7 @@ from smallinvoice.commons import Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.letters import Letter, LetterState
 from smallinvoice.tests import get_smallinvoice
 
+
 def test_letters():
     result = get_smallinvoice().letters.all()
     assert len(result) > 0
@@ -22,7 +23,6 @@ def test_letter_pdf():
 def test_letter_preview():
     preview = get_smallinvoice().letters.preview(32497, 1, PREVIEW_SIZE.SMALL)
     assert len(preview) > 0
-
 
 
 def test_add_letter():

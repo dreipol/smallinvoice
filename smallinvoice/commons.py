@@ -1,6 +1,7 @@
 # coding=utf-8
 import json, collections
 
+
 class PREVIEW_SIZE(object):
     SMALL = 240
     MEDIUM = 600
@@ -36,9 +37,8 @@ class SmallInvoiceConnectionException(SmallInvoiceException):
 
     def __init__(self, status_code, remote_message):
         message = "Failed to Connect, Status %s; Message: %s" % (
-        status_code, remote_message)
+            status_code, remote_message)
         super(SmallInvoiceException, self).__init__(message)
-
 
 
 class Methods(object):
@@ -51,7 +51,6 @@ class Methods(object):
     PREVIEW = "%s/preview/id/%s/page/%s/size/%s"
     EMAIL = "%s/email/id/%s"
     STATUS = "%s/status/id/%s"
-
 
 
 class BaseService(object):
@@ -84,18 +83,18 @@ class BaseService(object):
     def preview(self, identifier, page_number, size):
         """ returns a preview from the object and the page with the specified size as binary data """
         return self.client.request_with_method(
-            Methods.PREVIEW% (self.name, identifier, page_number, size,))
+            Methods.PREVIEW % (self.name, identifier, page_number, size,))
 
     def email(self, identifier, data):
         return self.client.request_with_method(Methods.EMAIL % (self.name, identifier,),
-                                                   data=data)
+                                               data=data)
 
     def status(self, identifier, data):
         return self.client.request_with_method(Methods.STATUS % (self.name, identifier,),
                                                data=data)
 
-class BaseJsonEncodableObject(object):
 
+class BaseJsonEncodableObject(object):
     """ This class can be easily encoded into a json string by calling encode, because smallinvoice excepts the json
         attributes to be in a certain order, we have to work with a ordered set as data representation.
     """
@@ -126,9 +125,9 @@ class BaseJsonEncodableObject(object):
 
 
 class ObjectWithPositions(BaseJsonEncodableObject):
-
     def add_position(self, position):
         self.append_to('positions', position)
+
 
 class Recipient(BaseJsonEncodableObject):
     def __init__(self, cc, email, name):

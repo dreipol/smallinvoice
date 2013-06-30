@@ -14,7 +14,6 @@ class Offer(ObjectWithPositions):
         self.positions = []
 
 
-
 class OfferState(BaseJsonEncodableObject):
     DRAFT = 0
     SENT = 1

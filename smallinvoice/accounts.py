@@ -3,8 +3,7 @@ from smallinvoice.commons import BaseJsonEncodableObject, BaseService, Methods
 
 
 class Account(BaseJsonEncodableObject):
-
-    def __init__(self, title, institute, number, iban, swiftbic, clearing, postaccount,lsv,dd,esr):
+    def __init__(self, title, institute, number, iban, swiftbic, clearing, postaccount, lsv, dd, esr):
         self.title = title
         self.institute = institute
         self.number = number

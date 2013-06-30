@@ -1,5 +1,5 @@
 # coding=utf-8
-from smallinvoice.tests import  get_smallinvoice, generate_customer, generate_address
+from smallinvoice.tests import get_smallinvoice, generate_customer, generate_address
 
 
 def test_get_all_clients():

@@ -15,6 +15,7 @@ def generate_account():
                    dd=0,
                    esr=1)
 
+
 def test_list_accounts():
     client = get_smallinvoice()
     a = generate_account()
@@ -46,7 +47,7 @@ def test_delete_account():
     amount = len(client.accounts.all())
     a = generate_account()
     a_id = client.accounts.add(a)
-    assert len(client.accounts.all()) == amount +1
+    assert len(client.accounts.all()) == amount + 1
     client.accounts.delete(a_id)
     assert len(client.accounts.all()) == amount
 
@@ -54,7 +55,7 @@ def test_delete_account():
 def test_account_update():
     client = get_smallinvoice()
     a = generate_account()
-    a_id =client.accounts.add(a)
+    a_id = client.accounts.add(a)
     a.institute = 'Test Change'
     client.accounts.update(a_id, a)
     details = client.accounts.details(a_id)
