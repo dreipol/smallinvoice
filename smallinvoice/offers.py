@@ -11,7 +11,6 @@ class Offer(ObjectWithPositions):
         self.date = date
         self.due = due
         self.language = language
-        self.positions = []
 
 
 class OfferState(BaseJsonEncodableObject):

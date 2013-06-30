@@ -9,7 +9,6 @@ class Receipt(ObjectWithPositions):
         self.currency = currency
         self.date = date
         self.language = language
-        self.positions = []
 
 
 class ReceiptState(BaseJsonEncodableObject):

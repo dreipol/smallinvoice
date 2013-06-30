@@ -11,7 +11,6 @@ class Invoice(ObjectWithPositions):
         self.date = date
         self.due = due
         self.language = language
-        self.positions = []
 
 
 class Payment(BaseJsonEncodableObject):
