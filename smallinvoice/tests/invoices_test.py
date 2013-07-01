@@ -37,12 +37,14 @@ def test_add_invoice():
     client = get_smallinvoice()
     client_id = client.clients.add(customer)
     det = client.clients.details(client_id)
-    p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
-                 cost=99099, unit=3, amount=1)
     i = Invoice(client_id=client_id, client_address_id=det['main_address_id'], currency="CHF",
                 date="2013-01-03", due="2013-01-24", language="de",
     )
+
+    p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
+                 cost=99099, unit=3, amount=1)
     i.add_position(p)
+
     i.dd = 1
     invoice_id = client.invoices.add(i)
     details = client.invoices.details(invoice_id)
@@ -51,7 +53,7 @@ def test_add_invoice():
     assert the_position["name"] == "Basisbeitrag"
     client.invoices.delete(invoice_id)
 
-#
+
 def test_update_invoice():
     p = Position(position_type=1, number=2, name="Basisbeitrag", description="Update",
                  cost=1440, unit=3, amount=1)

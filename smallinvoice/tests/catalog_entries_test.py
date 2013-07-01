@@ -1,31 +1,34 @@
 # coding=utf-8
+import unittest
 from smallinvoice.catalog import Catalog
 from smallinvoice.tests import get_smallinvoice
 
 
-def test_get_all_catalog_entries():
-    result = get_smallinvoice().catalogs.all()
-    assert len(result) > 0
+def generate_catalog():
+    return Catalog(catalog_type='1',
+                   unit='2',
+                   name='Unit Test',
+                   cost_per_unit=100)
 
+class CatalogTests(unittest.TestCase):
 
-def test_catalog_entry_details():
-    details = get_smallinvoice().catalogs.details(1696)
-    assert details["name"] == "Halbe Tage ohne Essen"
+    def setUp(self):
+        self.c = generate_catalog()
+        self.catalog_id = get_smallinvoice().catalogs.add(self.c)
 
+    def tearDown(self):
+        get_smallinvoice().catalogs.delete(self.catalog_id)
 
-def test_add_catalog():
-    c = Catalog(catalog_type=1, unit=2, name="Add_Test", cost_per_unit=50)
-    client = get_smallinvoice()
-    catalog_id = client.catalogs.add(c)
-    details = client.catalogs.details(catalog_id)
-    assert details["name"] == "Add_Test"
-    client.catalogs.delete(catalog_id)
+    def test_catalog(self):
+        self.assertIsNotNone(self.catalog_id)
 
+    def test_catalog_details(self):
+        self.assertEqual(self.c.name, 'Unit Test')
 
-def test_update_catalog():
-    c = Catalog(catalog_type=1, unit=2, name="Update", cost_per_unit=50)
-    c.id = 178187
-    client = get_smallinvoice()
-    client.catalogs.update(c.id, c)
-    details = client.catalogs.details(c.id)
-    assert details["name"] == "Update"
+    def test_catalog_add(self):
+        self.assertTrue(self.catalog_id)
+
+    def test_catalog_update(self):
+        self.assertEqual(self.c.name, 'Unit Test')
+        self.c.name = 'Test Change'
+        self.assertEqual(self.c.name, 'Test Change')

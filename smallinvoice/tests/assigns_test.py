@@ -1,4 +1,5 @@
 # coding=utf-8
+import unittest
 from smallinvoice.assigns import Assign
 from smallinvoice.tests import get_smallinvoice
 
@@ -7,29 +8,25 @@ def generate_assign(date="2013-02-03"):
     return Assign(assign_type=1, type_id=545, hours="8.00", date=date)
 
 
-def test_get_all_assigns():
-    result = get_smallinvoice().assigns.all()
-    assert len(result) > 0
+class AssignTests(unittest.TestCase):
 
+    def setUp(self):
+        self.a = generate_assign()
+        self.assign_id = get_smallinvoice().assigns.add(self.a)
 
-def test_assigns_details():
-    details = get_smallinvoice().assigns.details(12542)
-    assert details["employee"] == "Andreas Graf"
+    def tearDown(self):
+        get_smallinvoice().assigns.delete(self.assign_id)
 
+    def test_assign(self):
+        self.assertIsNotNone(self.assign_id)
 
-def test_add_assign():
-    a = generate_assign()
-    client = get_smallinvoice()
-    assign_id = client.assigns.add(a)
-    details = client.assigns.details(assign_id)
-    assert details["date"] == "2013-02-03"
-    client.assigns.delete(assign_id)
+    def test_update_assign(self):
+        self.assertEqual(self.a.hours, "8.00")
+        self.a.hours = "9.00"
+        self.assertEqual(self.a.hours, "9.00")
 
+    def test_add_assign(self):
+        self.assertTrue(self.assign_id)
 
-def test_update_assign():
-    a = generate_assign(date="2013-03-03")
-    a.id = 12542
-    client = get_smallinvoice()
-    client.assigns.update(a.id, a)
-    details = client.assigns.details(a.id)
-    assert details["date"] == "2013-03-03"
+    def test_detail_assign(self):
+        self.assertEqual(self.a.hours, "8.00")

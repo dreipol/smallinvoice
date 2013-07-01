@@ -1,4 +1,5 @@
 # coding=utf-8
+import unittest
 from smallinvoice.accounts import Account
 from smallinvoice.tests import get_smallinvoice
 
@@ -16,48 +17,25 @@ def generate_account():
                    esr=1)
 
 
-def test_list_accounts():
-    client = get_smallinvoice()
-    a = generate_account()
-    account_id = client.accounts.add(a)
-    assert len(client.accounts.all()) > 0
-    client.accounts.delete(account_id)
+class AccountTests(unittest.TestCase):
 
+    def setUp(self):
+        self.a = generate_account()
+        self.account_id = get_smallinvoice().accounts.add(self.a)
 
-def test_add_accounts():
-    client = get_smallinvoice()
-    a = generate_account()
-    account_id = client.accounts.add(a)
-    assert account_id
-    client.accounts.delete(account_id)
+    def tearDown(self):
+        get_smallinvoice().accounts.delete(self.account_id)
 
+    def test_account_tests(self):
+        self.assertIsNotNone(self.account_id)
 
-def test_get_accounts_details():
-    client = get_smallinvoice()
-    a = generate_account()
-    account_id = client.accounts.add(a)
-    details = client.accounts.details(account_id)
-    assert details['institute'] == 'Familie Test'
-    client.accounts.delete(account_id)
+    def test_account_add(self):
+        self.assertTrue(self.account_id)
 
+    def test_account_details(self):
+        self.assertEqual(self.a.institute, 'Familie Test')
 
-def test_delete_account():
-    client = get_smallinvoice()
-    amount = len(client.accounts.all())
-    a = generate_account()
-    a_id = client.accounts.add(a)
-    assert len(client.accounts.all()) == amount + 1
-    client.accounts.delete(a_id)
-    assert len(client.accounts.all()) == amount
-
-
-def test_account_update():
-    client = get_smallinvoice()
-    a = generate_account()
-    a_id = client.accounts.add(a)
-    a.institute = 'Test Change'
-    client.accounts.update(a_id, a)
-    details = client.accounts.details(a_id)
-    assert details['institute'] == a.institute
-    client.accounts.delete(a_id)
-
+    def test_account_update(self):
+        self.assertEqual(self.a.institute, 'Familie Test')
+        self.a.institute = 'Test Change'
+        self.assertEqual(self.a.institute, 'Test Change')
