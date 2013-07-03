@@ -1,32 +1,32 @@
 # coding=utf-8
-import datetime
+import datetime, unittest
 from smallinvoice.tests import get_smallinvoice
 from smallinvoice.time import Time
 
 
-def test_get_all_times():
-    result = get_smallinvoice().times.all()
-    assert len(result) > 0
+def generate_time():
+    return Time(
+        start='0900',
+        end='2100',
+        date='2013-07-03'
+    )
 
+class TimeTests(unittest.TestCase):
 
-def test_times_details():
-    details = get_smallinvoice().times.details(7706)
-    assert details["start"] == 900
+    def setUp(self):
+        self.time = generate_time()
+        self.time_id = get_smallinvoice().times.add(self.time)
 
+    def tearDown(self):
+        get_smallinvoice().times.delete(self.time_id)
 
-def test_add_time():
-    t = Time(start="0900", end="1200", date=datetime.date.today().strftime('%Y-%m-%d'))
-    client = get_smallinvoice()
-    time_id = client.times.add(t)
-    details = client.times.details(time_id)
-    assert details["start"] == 900
-    client.times.delete(time_id)
+    def test_time(self):
+        self.assertIsNotNone(self.time_id)
 
+    def test_time_details(self):
+        self.assertEqual(self.time.date, '2013-07-03')
 
-def test_update_time():
-    t = Time(start="0900", end="1200", date="2013-01-03")
-    t.id = 7706
-    client = get_smallinvoice()
-    client.times.update(t.id, t)
-    details = client.times.details(t.id)
-    assert details["start"] == 900
+    def test_time_update(self):
+        self.assertEqual(self.time.start, '0900')
+        self.time.start = '1100'
+        self.assertEqual(self.time.start, '1100')

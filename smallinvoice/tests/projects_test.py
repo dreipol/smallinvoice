@@ -1,32 +1,38 @@
 # coding=utf-8
+import unittest
 from smallinvoice.projects import Project
-from smallinvoice.tests import get_smallinvoice
+from smallinvoice.tests import get_smallinvoice, generate_customer, generate_address
 
 
-def test_get_all_projects():
-    result = get_smallinvoice().projects.all()
-    assert len(result) > 0
+def generate_project():
+    return Project(
+        name='Testproject',
+        client_id=''
+    )
 
 
-def test_project_details():
-    details = get_smallinvoice().projects.details(545)
-    print(details)
-    assert details["estimate"] == 20
+class ProjectTests(unittest.TestCase):
 
+    def setUp(self):
+        self.address = generate_address()
+        self.client = generate_customer()
+        self.client.add_address(self.address)
+        self.project = generate_project()
+        self.customer_id = get_smallinvoice().clients.add(self.client)
+        self.project.client_id = self.customer_id
+        self.project_id = get_smallinvoice().projects.add(self.project)
 
-def test_add_project():
-    p = Project(name="Testprojekt", client_id=24401)
-    client = get_smallinvoice()
-    project_id = client.projects.add(p)
-    details = client.projects.details(project_id)
-    assert details["name"] == "Testprojekt"
-    client.projects.delete(project_id)
+    def tearDown(self):
+        get_smallinvoice().clients.delete(self.customer_id)
+        get_smallinvoice().projects.delete(self.project_id)
 
+    def test_project(self):
+        self.assertIsNotNone(self.project_id)
 
-def test_update_project():
-    p = Project(name="Test Projekt", client_id=24124)
-    p.id = 545
-    client = get_smallinvoice()
-    client.projects.update(p.id, p)
-    details = client.projects.details(p.id)
-    assert details["name"] == "Test Projekt"
+    def test_project_details(self):
+        self.assertEqual(self.project.name, 'Testproject')
+
+    def test_project_update(self):
+        self.assertEqual(self.project.name, 'Testproject')
+        self.project.name = 'AV-Framing'
+        self.assertEqual(self.project.name, 'AV-Farming')
