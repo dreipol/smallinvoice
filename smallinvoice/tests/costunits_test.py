@@ -1,31 +1,32 @@
 # coding=utf-8
+import unittest
 from smallinvoice.costunits import Costunit
 from smallinvoice.tests import get_smallinvoice
 
 
-def test_get_all_costunits():
-    result = get_smallinvoice().costunits.all()
-    assert len(result) > 0
+def generate_costunit():
+    return Costunit(
+        name="Dollares",
+        status=1
+    )
 
 
-def test_costunits_details():
-    details = get_smallinvoice().costunits.details(234)
-    assert details["name"] == "Kostenstellentest"
+class CostunitTests(unittest.TestCase):
 
+    def setUp(self):
+        self.costunit = generate_costunit()
+        self.costunit_id = get_smallinvoice().costunits.add(self.costunit)
 
-def test_add_costunit():
-    c = Costunit(name="Testunit", status=1)
-    client = get_smallinvoice()
-    costunit_id = client.costunits.add(c)
-    details = client.costunits.details(costunit_id)
-    assert details["name"] == "Testunit"
-    client.costunits.delete(costunit_id)
+    def tearDown(self):
+        get_smallinvoice().costunits.delete(self.costunit_id)
 
+    def test_costunit(self):
+        self.assertIsNotNone(self.costunit_id)
 
-def test_update_costunit():
-    c = Costunit(name="Kostenstellentest", status=1)
-    c.id = 234
-    client = get_smallinvoice()
-    client.costunits.update(c.id, c)
-    details = client.costunits.details(c.id)
-    assert details["name"] == "Kostenstellentest"
+    def test_costunit_details(self):
+        self.assertEqual(self.costunit.name, 'Dollares')
+
+    def test_costunit_update(self):
+        self.assertEqual(self.costunit.name, 'Dollares')
+        self.costunit.name = 'Lira'
+        self.assertEqual(self.costunit.name, 'Lira')

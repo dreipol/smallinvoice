@@ -3,11 +3,10 @@ import os
 from smallinvoice import Smallinvoice
 
 TEST_API_TOKEN = os.environ['TEST_API_TOKEN']
-
+smallinvoice = Smallinvoice(TEST_API_TOKEN)
 
 def get_smallinvoice():
-    return Smallinvoice(TEST_API_TOKEN)
-
+    return smallinvoice
 
 def generate_address():
     from smallinvoice.clients import Address
