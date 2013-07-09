@@ -1,6 +1,7 @@
 # coding=utf-8
 import unittest
-from smallinvoice.tests import get_smallinvoice, generate_customer, generate_address
+from smallinvoice.tests import get_smallinvoice, generate_customer, \
+    generate_address
 
 
 class ClientTests(unittest.TestCase):

@@ -1,7 +1,8 @@
 # coding=utf-8
 import unittest
 from smallinvoice.projects import Project
-from smallinvoice.tests import get_smallinvoice, generate_customer, generate_address
+from smallinvoice.tests import get_smallinvoice, generate_customer, \
+    generate_address
 
 
 def generate_project():
