@@ -1,63 +1,71 @@
 # coding=utf-8
+import unittest
 from smallinvoice.commons import Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.letters import Letter, LetterState
-from smallinvoice.tests import get_smallinvoice
+from smallinvoice.tests import get_smallinvoice, generate_address, \
+    generate_customer
 
 
-def test_letters():
-    result = get_smallinvoice().letters.all()
-    assert len(result) > 0
+def generate_letter():
+    return Letter(
+        client_id='',
+        client_address_id='',
+        date='2013-07-03',
+        title='Congratulations'
+    )
 
 
-def test_letter_details():
-    details = get_smallinvoice().letters.details(32497)
-    print details
-    assert details["title"] == "Python-Update"
+class LetterTests(unittest.TestCase):
 
+    def setUp(self):
+        self.address = generate_address()
+        self.client = generate_customer()
+        self.client.add_address(self.address)
+        self.letter = generate_letter()
+        self.customer_id = get_smallinvoice().clients.add(self.client)
 
-def test_letter_pdf():
-    pdf = get_smallinvoice().letters.pdf(32497)
-    assert len(pdf) > 0
+        self.letter.client_id = self.customer_id
+        test = get_smallinvoice().clients.details(self.customer_id)
+        self.letter.client_address_id = test['main_address_id']
 
+        self.letter_id = get_smallinvoice().letters.add(self.letter)
 
-def test_letter_preview():
-    preview = get_smallinvoice().letters.preview(32497, 1, PREVIEW_SIZE.SMALL)
-    assert len(preview) > 0
+    def tearDown(self):
+        get_smallinvoice().clients.delete(self.customer_id)
+        get_smallinvoice().letters.delete(self.letter_id)
 
+    def test_letter(self):
+        self.assertIsNotNone(self.letter_id)
 
-def test_add_letter():
-    l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04",
-               title="Python-Test")
-    client = get_smallinvoice()
-    letter_id = client.letters.add(l)
-    details = client.letters.details(letter_id)
-    assert details["title"] == "Python-Test"
-    client.letters.delete(letter_id)
+    def test_letter_details(self):
+        self.assertEqual(self.letter.title, 'Congratulations')
 
+    def test_letter_update(self):
+        self.assertEqual(self.letter.title, 'Congratulations')
+        self.letter.title = 'Updated Title'
+        self.assertEqual(self.letter.title, 'Updated Title')
 
-def test_update_letter():
-    l = Letter(client_id=24124, client_address_id=24183, date="2013-01-04",
-               title="Python-Update")
-    l.id = 32497
-    client = get_smallinvoice()
-    client.letters.update(l.id, l)
-    details = client.letters.details(l.id)
-    assert details["title"] == "Python-Update"
+    def test_letter_pdf(self):
+        pdf = get_smallinvoice().letters.pdf(self.letter_id)
+        self.assertTrue(len(pdf) > 0)
 
+    def test_letter_preview(self):
+        preview = get_smallinvoice().letters.preview(self.letter_id, 1,
+                                                     PREVIEW_SIZE.SMALL)
+        self.assertTrue(len(preview) > 0)
 
-def test_email_letter():
-    r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
-    m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
-             afterstatus=1)
-    m.add_recipient(r)
-    m.id = 32497
-    client = get_smallinvoice()
-    client.letters.email(m.id, m)
-    assert True
+    def test_email_letter(self):
+        r = Recipient(cc=False, email="philipp.laeubli@dreipol.ch",
+                      name="Test Name")
+        m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
+                 afterstatus=1)
+        m.add_recipient(r)
+        m.id = self.letter_id
+        get_smallinvoice().letters.email(m.id, m)
+        self.assertEqual(m.id, self.letter_id)
 
-
-def test_status_letter():
-    s = LetterState(status=LetterState.DRAFT)
-    client = get_smallinvoice()
-    client.letters.status(32497, data=s)
-    assert client.letters.details(32497)["status"] == 7
+    def test_status_letter(self):
+        s = LetterState(status=LetterState.DRAFT)
+        get_smallinvoice().letters.status(self.letter_id, data=s)
+        self.assertTrue(get_smallinvoice().letters.details(self.letter_id)
+                        ["status"] == 7)

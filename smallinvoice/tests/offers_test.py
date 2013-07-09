@@ -1,73 +1,90 @@
 # coding=utf-8
+import unittest
 from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.offers import Offer, OfferState
-from smallinvoice.tests import get_smallinvoice
+from smallinvoice.tests import get_smallinvoice, generate_address, \
+    generate_customer
 
 
-def test_offers():
-    result = get_smallinvoice().offers.all()
-    assert len(result) > 0
+def generate_offer():
+    return Offer(
+        client_id='',
+        client_address_id='',
+        currency='CHF',
+        date='2013-07-03',
+        due='2013-07-28',
+        language='en'
+    )
 
 
-def test_offer_details():
-    details = get_smallinvoice().offers.details(26193)
-    assert details["totalamount"] == 1350
+def generate_position():
+    return Position(
+        position_type=1,
+        number=50,
+        name='Position',
+        description='Unittests',
+        cost=15.50,
+        unit=6,
+        amount=2.5,
+        discount=0,
+        vat=3
+    )
 
 
-def test_offer_pdf():
-    pdf = get_smallinvoice().offers.pdf(26193)
-    assert len(pdf) > 0
+class OfferTests(unittest.TestCase):
 
+    def setUp(self):
+        self.address = generate_address()
+        self.client = generate_customer()
+        self.client.add_address(self.address)
+        self.position = generate_position()
+        self.offer = generate_offer()
+        self.offer.add_position(self.position)
 
-def test_offer_preview():
-    preview = get_smallinvoice().offers.preview(26193, 1, PREVIEW_SIZE.SMALL)
-    assert len(preview) > 0
+        self.customer_id = get_smallinvoice().clients.add(self.client)
 
+        self.offer.client_id = self.customer_id
+        test = get_smallinvoice().clients.details(self.customer_id)
+        self.offer.client_address_id = test['main_address_id']
 
-def test_add_offer():
-    p = Position(position_type=1, number=2, name="Basisbeitrag", description="Test",
-                 cost=6000, unit=3, amount=1)
-    o = Offer(client_id=24401, client_address_id=24461, currency="CHF",
-              date="2013-01-03", due="2013-01-24", language="de")
+        self.offer_id = get_smallinvoice().offers.add(self.offer)
 
-    o.add_position(p)
-    client = get_smallinvoice()
-    offer_id = client.offers.add(o)
-    details = client.offers.details(offer_id)
+    def tearDown(self):
+        get_smallinvoice().clients.delete(self.customer_id)
+        get_smallinvoice().offers.delete(self.offer_id)
 
-    the_position = details["positions"][0]
-    assert the_position["description"] == "Test"
-    client.offers.delete(offer_id)
+    def test_offer(self):
+        self.assertIsNotNone(self.offer_id)
 
+    def test_offer_details(self):
+        self.assertEqual(self.offer.language, 'en')
 
-def test_update_offer():
-    p = Position(position_type=1, number=2, name="Basisbeitrag", description="Update",
-                 cost=1350, unit=3, amount=1)
-    p.id = 51090
-    o = Offer(client_id=24401, client_address_id=24461, currency="CHF",
-              date="2013-01-03", due="2013-01-24", language="de")
-    o.add_position(p)
-    o.id = 26193
-    client = get_smallinvoice()
-    client.offers.update(o.id, o)
-    details = client.offers.details(o.id)
-    the_position = details["positions"][0]
-    assert the_position["description"] == "Update"
+    def test_offer_update(self):
+        self.assertEqual(self.offer.language, 'en')
+        self.offer.language = 'de'
+        self.assertEqual(self.offer.language, 'de')
 
+    def test_offer_pdf(self):
+        pdf = get_smallinvoice().offers.pdf(self.offer_id)
+        self.assertTrue(len(pdf) > 0)
 
-def test_email_offer():
-    r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
-    m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
-             afterstatus=1)
-    m.add_recipient(r)
-    m.id = 26193
-    client = get_smallinvoice()
-    client.offers.email(m.id, m)
-    assert True
+    def test_offer_preview(self):
+        preview = get_smallinvoice().offers.preview(self.offer_id, 1,
+                                                    PREVIEW_SIZE.SMALL)
+        self.assertTrue(len(preview) > 0)
 
+    def test_email_offer(self):
+        r = Recipient(cc=False, email="philipp.laeubli@dreipol.ch",
+                      name="Test Name")
+        m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
+                 afterstatus=1)
+        m.add_recipient(r)
+        m.id = self.offer_id
+        get_smallinvoice().offers.email(m.id, m)
+        self.assertEqual(m.id, self.offer_id)
 
-def test_status_invoice():
-    s = OfferState(status=OfferState.OK)
-    client = get_smallinvoice()
-    client.offers.status(26193, data=s)
-    assert client.offers.details(26193)["status"] == 9
+    def test_status_offer(self):
+        s = OfferState(status=OfferState.OK)
+        get_smallinvoice().offers.status(self.offer_id, data=s)
+        self.assertTrue(get_smallinvoice().offers.details(self.offer_id)
+                        ["status"] == 9)

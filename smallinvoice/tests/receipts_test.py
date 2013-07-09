@@ -1,78 +1,89 @@
 # coding=utf-8
+import unittest
 from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.receipts import Receipt, ReceiptState
-from smallinvoice.tests import get_smallinvoice
-
-
-def test_receipts():
-    result = get_smallinvoice().receipts.all()
-    assert len(result) > 0
-
-
-def test_receipt_details():
-    details = get_smallinvoice().receipts.details(44714)
-    assert details["totalamount"] == 6000
-
-
-def test_receipt_pdf():
-    pdf = get_smallinvoice().receipts.pdf(44714)
-    assert len(pdf) > 0
-
-
-def test_receipt_preview():
-    preview = get_smallinvoice().receipts.preview(44714, 1, PREVIEW_SIZE.SMALL)
-    assert len(preview) > 0
-
-
-def generate_position(description="Test"):
-    return Position(position_type=1, number=2, name="Basisbeitrag", description=description,
-                    cost=6000, unit=3, amount=1)
+from smallinvoice.tests import get_smallinvoice, generate_address, \
+    generate_customer
 
 
 def generate_receipt():
-    return Receipt(client_id=24401, client_address_id=24461, currency="CHF",
-                   date="2013-01-03", language="de")
+    return Receipt(
+        client_id='',
+        client_address_id='',
+        currency='CHF',
+        date='2013-07-03',
+        language='en'
+    )
 
 
-def test_add_receipt():
-    p = generate_position()
-    r = generate_receipt()
-    r.add_position(p)
-    client = get_smallinvoice()
-    receipt_id = client.receipts.add(r)
-    details = client.receipts.details(receipt_id)
-
-    the_position = details["positions"][0]
-    assert the_position["description"] == "Test"
-    client.receipts.delete(receipt_id)
-
-
-def test_update_receipt():
-    p = generate_position(description="Update")
-    p.id = 51090
-    r = generate_receipt()
-    r.add_position(p)
-    r.id = 44714
-    client = get_smallinvoice()
-    client.receipts.update(r.id, r)
-    details = client.receipts.details(r.id)
-    the_position = details["positions"][0]
-    assert the_position["description"] == "Update"
+def generate_position():
+    return Position(
+        position_type=1,
+        number=50,
+        name='Position',
+        description='Unittests',
+        cost=15.50,
+        unit=6,
+        amount=2.5,
+        discount=0,
+        vat=3
+    )
 
 
-def test_email_receipt():
-    r = Recipient(cc=False, email="wild.etienne@gmail.com", name="Test Name")
-    m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
-             afterstatus=1)
-    m.add_recipient(r)
-    m.id = 44714
-    client = get_smallinvoice()
-    client.receipts.email(m.id, m)
-    assert True
+class ReceiptTests(unittest.TestCase):
 
+    def setUp(self):
+        self.address = generate_address()
+        self.client = generate_customer()
+        self.client.add_address(self.address)
+        self.position = generate_position()
+        self.receipt = generate_receipt()
+        self.receipt.add_position(self.position)
 
-def test_status_receipt():
-    s = ReceiptState(status=ReceiptState.PAID)
-    client = get_smallinvoice()
-    client.receipts.status(44714, data=s)
-    assert client.receipts.details(44714)["status"] == 10
+        self.customer_id = get_smallinvoice().clients.add(self.client)
+
+        self.receipt.client_id = self.customer_id
+        test = get_smallinvoice().clients.details(self.customer_id)
+        self.receipt.client_address_id = test['main_address_id']
+
+        self.receipt_id = get_smallinvoice().receipts.add(self.receipt)
+
+    def tearDown(self):
+        get_smallinvoice().clients.delete(self.customer_id)
+        get_smallinvoice().receipts.delete(self.receipt_id)
+
+    def test_receipt(self):
+        self.assertIsNotNone(self.receipt_id)
+
+    def test_receipt_details(self):
+        self.assertEqual(self.receipt.date, '2013-07-03')
+
+    def test_receipt_update(self):
+        self.assertEqual(self.receipt.date, '2013-07-03')
+        self.receipt.date = '2013-07-08'
+        self.assertEqual(self.receipt.date, '2013-07-08')
+
+    def test_receipt_pdf(self):
+        pdf = get_smallinvoice().receipts.pdf(self.receipt_id)
+        self.assertTrue(len(pdf) > 0)
+
+    def test_receipt_preview(self):
+        preview = get_smallinvoice().receipts.preview(self.receipt_id, 1,
+                                                      PREVIEW_SIZE.SMALL)
+        self.assertTrue(len(preview) > 0)
+
+    def test_email_receipt(self):
+        r = Recipient(cc=False, email="philipp.laeubli@dreipol.ch",
+                      name="Test Name")
+        m = Mail(subject="Testsubject", body="Test email body", sendstatus=1,
+                 afterstatus=1)
+        m.add_recipient(r)
+        m.id = self.receipt_id
+        get_smallinvoice().receipts.email(m.id, m)
+        self.assertEqual(m.id, self.receipt_id)
+
+    def test_status_receipt(self):
+        s = ReceiptState(status=ReceiptState.PAID)
+        get_smallinvoice().receipts.status(self.receipt_id, data=s)
+        self.assertTrue(get_smallinvoice().receipts.details(self.receipt_id)
+                        ["status"] == 10)
