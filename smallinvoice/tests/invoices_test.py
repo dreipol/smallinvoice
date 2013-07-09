@@ -1,9 +1,9 @@
 # coding=utf-8
 import unittest
-from smallinvoice.commons import Position, Recipient, Mail, PREVIEW_SIZE
+from smallinvoice.commons import Recipient, Mail, PREVIEW_SIZE
 from smallinvoice.invoices import Invoice, InvoiceState
 from smallinvoice.tests import get_smallinvoice, generate_customer, \
-    generate_address
+    generate_address, generate_position
 
 
 def generate_invoice():
@@ -14,20 +14,6 @@ def generate_invoice():
         date="2013-07-02",
         due="2013-07-04",
         language="en"
-    )
-
-
-def generate_position():
-    return Position(
-        position_type=1,
-        number=50,
-        name='Position',
-        description='Unittests',
-        cost=15.50,
-        unit=6,
-        amount=2.5,
-        discount=0,
-        vat=3
     )
 
 
