@@ -13,7 +13,6 @@ def generate_time():
 
 
 class TimeTests(unittest.TestCase):
-
     def setUp(self):
         self.time = generate_time()
         self.time_id = get_smallinvoice().times.add(self.time)

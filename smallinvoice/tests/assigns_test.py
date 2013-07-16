@@ -9,7 +9,6 @@ def generate_assign(date="2013-02-03"):
 
 
 class AssignTests(unittest.TestCase):
-
     def setUp(self):
         self.a = generate_assign()
         self.assign_id = get_smallinvoice().assigns.add(self.a)

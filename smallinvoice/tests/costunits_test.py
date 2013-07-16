@@ -12,7 +12,6 @@ def generate_costunit():
 
 
 class CostunitTests(unittest.TestCase):
-
     def setUp(self):
         self.costunit = generate_costunit()
         self.costunit_id = get_smallinvoice().costunits.add(self.costunit)

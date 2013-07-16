@@ -18,7 +18,6 @@ def generate_offer():
 
 
 class OfferTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()

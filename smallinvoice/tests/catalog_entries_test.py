@@ -10,8 +10,8 @@ def generate_catalog():
                    name='Unit Test',
                    cost_per_unit=100)
 
-class CatalogTests(unittest.TestCase):
 
+class CatalogTests(unittest.TestCase):
     def setUp(self):
         self.c = generate_catalog()
         self.catalog_id = get_smallinvoice().catalogs.add(self.c)

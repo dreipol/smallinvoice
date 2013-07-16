@@ -16,7 +16,6 @@ def generate_letter():
 
 
 class LetterTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()

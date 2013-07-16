@@ -17,7 +17,6 @@ def generate_receipt():
 
 
 class ReceiptTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()

@@ -18,7 +18,6 @@ def generate_invoice():
 
 
 class InvoiceTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()

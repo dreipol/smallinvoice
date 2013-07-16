@@ -5,7 +5,6 @@ from smallinvoice.tests import get_smallinvoice, generate_customer, \
 
 
 class ClientTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()

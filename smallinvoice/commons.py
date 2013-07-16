@@ -89,7 +89,7 @@ class BaseService(object):
         :param identifier: the id of the object to be deleted
         """
         self.client.request_with_method(Methods.DELETE % (self.name, identifier,),
-                                               request_method=REQUEST_METHOD.POST)
+                                        request_method=REQUEST_METHOD.POST)
 
     def update(self, identifier, data):
         """
@@ -98,7 +98,7 @@ class BaseService(object):
         :param data: the data containing all the information of the object.
         """
         self.client.request_with_method(Methods.UPDATE % (self.name, identifier,),
-                                               data=data)
+                                        data=data)
 
     def pdf(self, identifier):
         """ returns the pdf from the object as binary data
@@ -122,7 +122,7 @@ class BaseService(object):
         :param data: the email object
         """
         self.client.request_with_method(Methods.EMAIL % (self.name, identifier,),
-                                               data=data)
+                                        data=data)
 
     def status(self, identifier, data):
         """
@@ -131,7 +131,7 @@ class BaseService(object):
         :param data: the new status data
         """
         self.client.request_with_method(Methods.STATUS % (self.name, identifier,),
-                                               data=data)
+                                        data=data)
 
 
 class BaseJsonEncodableObject(object):
@@ -191,7 +191,6 @@ class BaseJsonEncodableObject(object):
 
 
 class ObjectWithPositions(BaseJsonEncodableObject):
-
     def add_position(self, position):
         """
         Convenience method for objects that can save positions
