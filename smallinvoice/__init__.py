@@ -22,6 +22,10 @@ class Smallinvoice(object):
 
     @classmethod
     def register(cls, service):
+        """
+        registers an api service to the smallinvoice client
+        :param service: the service that should be made available
+        """
         cls.services[service.name] = service
 
     def __init__(self, api_token):
@@ -32,6 +36,7 @@ class Smallinvoice(object):
             raise SmallInvoiceConfigurationException(self)
         self.api_token = api_token
 
+        # loop through all registered services and make them available as attributes
         for service_name, service_class in self.services.iteritems():
             setattr(self, '%ss' % service_name, service_class(self))
 
