@@ -27,6 +27,7 @@ def generate_customer(name="Hanspeter Muster"):
 
 def generate_position():
     from smallinvoice.commons import Position
+
     return Position(
         position_type=1,
         number=50,

@@ -13,7 +13,6 @@ def generate_project():
 
 
 class ProjectTests(unittest.TestCase):
-
     def setUp(self):
         self.address = generate_address()
         self.client = generate_customer()
@@ -36,4 +35,4 @@ class ProjectTests(unittest.TestCase):
     def test_project_update(self):
         self.assertEqual(self.project.name, 'Testproject')
         self.project.name = 'AV-Framing'
-        self.assertEqual(self.project.name, 'AV-Farming')
+        self.assertEqual(self.project.name, 'AV-Framing')

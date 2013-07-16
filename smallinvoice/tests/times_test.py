@@ -1,5 +1,5 @@
 # coding=utf-8
-import datetime, unittest
+import unittest
 from smallinvoice.tests import get_smallinvoice
 from smallinvoice.time import Time
 
@@ -10,6 +10,7 @@ def generate_time():
         end='2100',
         date='2013-07-03'
     )
+
 
 class TimeTests(unittest.TestCase):
 

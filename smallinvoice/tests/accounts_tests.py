@@ -18,7 +18,6 @@ def generate_account():
 
 
 class AccountTests(unittest.TestCase):
-
     def setUp(self):
         self.a = generate_account()
         self.account_id = get_smallinvoice().accounts.add(self.a)
