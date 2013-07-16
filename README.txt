@@ -31,5 +31,10 @@ The following services are completely wrapped
 
 * Accounts
 
+Usage
+=========
 
-Feel free to add more services if needed.
+from smallinvoice import Smallinvoice
+
+smallinvoice = Smallinvoice(YOUR_API_TOKEN)
+smallinvoice.clients.all()

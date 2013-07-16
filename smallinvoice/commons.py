@@ -202,6 +202,10 @@ class ObjectWithPositions(BaseJsonEncodableObject):
 
 
 class Recipient(BaseJsonEncodableObject):
+    """
+        A recepient that can be used in emails
+    """
+
     def __init__(self, cc, email, name):
         self.cc = cc
         self.email = email
@@ -209,6 +213,10 @@ class Recipient(BaseJsonEncodableObject):
 
 
 class Mail(BaseJsonEncodableObject):
+    """
+        A Mail that accepts recipients
+    """
+
     def __init__(self, subject, body, sendstatus, afterstatus):
         self.subject = subject
         self.body = body
@@ -221,6 +229,10 @@ class Mail(BaseJsonEncodableObject):
 
 
 class Position(BaseJsonEncodableObject):
+    """
+        A position object that can be used by all ObjectWithPosition subclasses
+    """
+
     def __init__(self, position_type, number, description, cost, unit, amount, name="",
                  discount=None, vat=0):
         self.type = position_type

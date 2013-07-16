@@ -21,7 +21,7 @@ class AccountService(BaseService):
 
     def details(self, identifier):
         """
-        this webserice does not return the default dictionary containing the data in the item key, instead it
+        this webservice does not return the default dictionary containing the data in the item key, instead it
         returns the data directly.
         """
         return self.client.request_with_method(Methods.GET % (self.name, identifier,))
