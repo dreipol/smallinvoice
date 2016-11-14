@@ -25,7 +25,7 @@ class ClientAccountService(BaseService):
     name = 'clientaccount'
     
     def all(self, client_identifier):
-        return self.client.request_with_method('{0}/list/client_id/{1}'.format(self.name, client_identifier))
+        return self.client.request_with_method('{0}/list/client_id/{1}'.format(self.name, client_identifier))['items']
     
     def add(self, client_identifier, client_account):
         return self.client.request_with_method(

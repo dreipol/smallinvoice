@@ -17,30 +17,31 @@ class ClientAccountTests(unittest.TestCase):
     
     def test_list_client_accounts(self):
         data = get_smallinvoice().clientaccounts.all(self.client_id)
-        self.assertEquals(0, data['count'])
+        self.assertEquals(0, len(data))
         
         from smallinvoice.clientaccounts import ClientAccount
         ca = ClientAccount(number=121312313, swift='ABBCCHZZ', clearing='ATBLZ12345', name='tests')
         get_smallinvoice().clientaccounts.add(self.client_id, ca)
         
         data = get_smallinvoice().clientaccounts.all(self.client_id)
-        self.assertEquals(1, data['count'])
+        self.assertEquals(1, len(data))
     
     def test_delete_client_accounts(self):
         data = get_smallinvoice().clientaccounts.all(self.client_id)
-        self.assertEquals(0, data['count'])
+        self.assertEquals(0, len(data))
         
         from smallinvoice.clientaccounts import ClientAccount
         ca = ClientAccount(number=121312313, swift='ABBCCHZZ', clearing='ATBLZ12345', name='tests')
         client_account_id = get_smallinvoice().clientaccounts.add(self.client_id, ca)
         
         data = get_smallinvoice().clientaccounts.all(self.client_id)
-        self.assertEquals(1, data['count'])
+        self.assertEquals(1, len(data))
         
         get_smallinvoice().clientaccounts.delete(self.client_id, client_account_id)
         
         data = get_smallinvoice().clientaccounts.all(self.client_id)
-        self.assertEquals(0, data['count'])
+        
+        self.assertEquals(0, len(data))
     
     def test_update_client_accounts(self):
         from smallinvoice.clientaccounts import ClientAccount
