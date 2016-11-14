@@ -7,6 +7,7 @@ smallinvoice = Smallinvoice(TEST_API_TOKEN)
 
 
 def get_smallinvoice():
+    # type: () -> Smallinvoice
     return smallinvoice
 
 

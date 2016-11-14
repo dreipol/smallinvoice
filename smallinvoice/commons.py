@@ -58,6 +58,10 @@ class BaseService(object):
     name = 'BASE_SERVICE'
 
     def __init__(self, client):
+        """
+
+        :type client: Smallinvoice
+        """
         self.client = client
 
     def all(self):

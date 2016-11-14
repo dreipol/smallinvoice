@@ -1,6 +1,8 @@
 # coding=utf-8
 import json
 import requests
+
+from smallinvoice.clientaccounts import ClientAccountService
 from smallinvoice.commons import SmallInvoiceConfigurationException, SmallInvoiceConnectionException, REQUEST_METHOD
 from smallinvoice.accounts import AccountService
 from smallinvoice.assigns import AssignService
@@ -55,8 +57,9 @@ class Smallinvoice(object):
         """
         url = self.append_token_to_method(method)
         if data:
+            encode = data.encode()
             result = requests.post(url,
-                                   data={"data": data.encode()},
+                                   data={"data": encode},
                                    verify=False)
         else:
             if request_method == REQUEST_METHOD.POST:
@@ -70,24 +73,31 @@ class Smallinvoice(object):
         else:
             #currently smallinvoice.ch sets text/html as default, not application/json
             content_type = result.headers.get('content-type')
-            if 'text/html' in content_type or "application/json" in content_type:
-                try:
-                    data = json.loads(result.text)
-                    if 'error' in data and data["error"] is True:
-                        error_code = data['errorcode']
-                        error_message = data['errormessage']
-                        raise SmallInvoiceConnectionException(error_code,
-                                                              error_message)
-                    return data
-                except ValueError:
-                    raise SmallInvoiceConnectionException(
-                        "could not parse result from smallinvoice", result.text)
+            if result.content:
+                if 'text/html' in content_type or "application/json" in content_type:
+                    
+                    try:
+                        data = json.loads(result.text)
+                        if 'error' in data and data["error"] is True:
+                            error_code = data['errorcode']
+                            error_message = data['errormessage']
+                            raise SmallInvoiceConnectionException(error_code,
+                                                                  error_message)
+                        return data
+                    except ValueError as e:
+                        raise SmallInvoiceConnectionException(
+                            "could not parse result from smallinvoice", result.text)
+                else:
+                    return result.content
             else:
-                return result.content
+                print 'NO BODY', method, url, result.text, result.status_code
+                return {'error':False}
 
+            
 
 Smallinvoice.register(AccountService)
 Smallinvoice.register(ClientService)
+Smallinvoice.register(ClientAccountService)
 Smallinvoice.register(AssignService)
 Smallinvoice.register(CatalogService)
 Smallinvoice.register(CostUnitService)
