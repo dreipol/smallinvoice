@@ -31,6 +31,9 @@ The following services are completely wrapped
 
 * Accounts
 
+* Client Accounts
+
+
 Usage
 =========
 
