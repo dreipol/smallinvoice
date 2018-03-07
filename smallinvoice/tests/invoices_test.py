@@ -5,6 +5,8 @@ from smallinvoice.invoices import Invoice, InvoiceState
 from smallinvoice.tests import get_smallinvoice, generate_customer, \
     generate_address, generate_position
 
+INVOICE_PERIOD = 'Test Text for Period'
+
 
 def generate_invoice():
     return Invoice(
@@ -24,6 +26,7 @@ class InvoiceTests(unittest.TestCase):
         self.client.add_address(self.address)
         self.position = generate_position()
         self.invoice = generate_invoice()
+        self.invoice.period = INVOICE_PERIOD
         self.invoice.add_position(self.position)
 
         self.customer_id = get_smallinvoice().clients.add(self.client)
@@ -74,3 +77,8 @@ class InvoiceTests(unittest.TestCase):
         get_smallinvoice().invoices.status(self.invoice_id, data=s)
         self.assertTrue(get_smallinvoice().invoices.details(self.invoice_id)
                         ["status"] == 3)
+
+
+    def test_invoiceperiod_field(self):
+        details = get_smallinvoice().invoices.details(self.invoice_id)
+        self.assertEqual(INVOICE_PERIOD, details['period'])
