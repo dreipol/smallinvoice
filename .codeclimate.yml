@@ -1,3 +1,6 @@
 plugins:
   pep8:
     enabled: true
+
+exclude_patterns:
+  - "smallinvoice/tests/"
